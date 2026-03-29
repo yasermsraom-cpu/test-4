@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIÈRE — Photography & Videography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;
+  --bg2:#111111;
+  --bg3:#1a1a1a;
+  --gold:#c8a96e;
+  --gold2:#e8c98e;
+  --text:#f0ece4;
+  --text2:#9a9590;
+  --text3:#5a5550;
+  --border:#222;
+  --border2:#333;
+  --radius:4px;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --trans:cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--bg)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px}
+
+/* ── UTILS ── */
+.hidden{display:none!important}
+.page{display:none;min-height:100vh;animation:fadeIn .5s var(--trans)}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:none;border-radius:var(--radius);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:all .3s var(--trans);text-decoration:none}
+.btn-gold{background:var(--gold);color:var(--bg);box-shadow:0 0 24px #c8a96e33}
+.btn-gold:hover{background:var(--gold2);box-shadow:0 0 36px #c8a96e55;transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-outline:hover{background:var(--gold);color:var(--bg)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{color:var(--text);border-color:var(--text2)}
+.btn-danger{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b55}
+.btn-danger:hover{background:#c0392b44}
+.btn-sm{padding:9px 20px;font-size:12px}
+.section-label{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.section-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.15;color:var(--text)}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-sub{color:var(--text2);font-size:15px;max-width:520px;margin-top:16px;line-height:1.8}
+.divider{width:48px;height:1px;background:var(--gold);margin:24px 0}
+input,textarea,select{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:12px 16px;border-radius:var(--radius);font-family:var(--sans);font-size:14px;outline:none;transition:border .2s;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+select option{background:var(--bg3)}
+label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-weight:500}
+.form-group{margin-bottom:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.tag{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.tag-gold{background:#c8a96e22;color:var(--gold);border:1px solid #c8a96e44}
+.tag-green{background:#27ae6022;color:#2ecc71;border:1px solid #27ae6044}
+.tag-blue{background:#2980b922;color:#3498db;border:1px solid #2980b944}
+.tag-red{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b44}
+.tag-gray{background:#33333355;color:var(--text2);border:1px solid var(--border2)}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.toast{position:fixed;bottom:32px;right:32px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:14px 24px;border-radius:var(--radius);font-size:13px;z-index:9999;animation:slideUp .3s var(--trans);box-shadow:0 8px 32px #0008}
+.toast.success{border-color:#27ae6066;color:#2ecc71}
+.toast.error{border-color:#c0392b66;color:#e74c3c}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.modal-overlay{position:fixed;inset:0;background:#000c;z-index:8000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .2s}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:40px}
+.modal h2{font-family:var(--serif);font-size:2rem;font-weight:300;margin-bottom:24px;color:var(--text)}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:8px;line-height:1}
+.modal-close:hover{color:var(--text)}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .4s var(--trans)}
+#nav.scrolled{background:#080808ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:300;letter-spacing:.12em;color:var(--text);cursor:pointer;text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-link{background:none;border:none;color:var(--text2);font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:8px 14px;border-radius:var(--radius);transition:color .2s}
+.nav-link:hover,.nav-link.active{color:var(--text)}
+.nav-book{padding:10px 24px!important;font-size:12px!important}
+#menu-btn{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px;font-size:18px}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:#080808f5;backdrop-filter:blur(12px);flex-direction:column;padding:24px;border-bottom:1px solid var(--border);gap:4px}
+  .nav-links.open{display:flex}
+  #menu-btn{display:block}
+}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#111 50%,#0a0505 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.3}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);animation:pulse 6s ease-in-out infinite}
+.hero-orb1{width:500px;height:500px;background:#c8a96e18;top:-100px;right:-100px}
+.hero-orb2{width:300px;height:300px;background:#8b5e1a18;bottom:10%;left:10%;animation-delay:3s}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero-label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.hero-label::before{content:'';width:40px;height:1px;background:var(--gold)}
+.hero-title{font-family:var(--serif);font-size:clamp(3rem,8vw,6rem);font-weight:300;line-height:1.05;color:var(--text);margin-bottom:28px}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.8;max-width:480px;margin-bottom:40px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.hero-stats{position:absolute;bottom:48px;right:48px;display:flex;gap:40px;z-index:2}
+.stat-item{text-align:right}
+.stat-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;color:var(--gold);display:block;line-height:1}
+.stat-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 1.8s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(1.5);opacity:.5}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+@media(max-width:768px){.hero-stats{display:none}.hero-content{padding:0 24px}}
+
+/* ── PORTFOLIO PREVIEW ── */
+.featured{padding:120px 0}
+.section-header{margin-bottom:64px}
+.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.featured-grid .item-wide{grid-column:span 2}
+.portfolio-item{position:relative;overflow:hidden;cursor:pointer;background:var(--bg3);aspect-ratio:4/3}
+.portfolio-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--trans)}
+.portfolio-item:hover img{transform:scale(1.08)}
+.portfolio-item .overlay{position:absolute;inset:0;background:linear-gradient(to top,#000c 0%,transparent 50%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:24px}
+.portfolio-item:hover .overlay{opacity:1}
+.pi-meta{transform:translateY(12px);transition:transform .4s var(--trans)}
+.portfolio-item:hover .pi-meta{transform:none}
+.pi-cat{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.pi-title{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:var(--text)}
+.pi-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:#000a;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;opacity:0;transition:.3s;backdrop-filter:blur(4px)}
+.portfolio-item:hover .pi-play{opacity:1}
+@media(max-width:900px){.featured-grid{grid-template-columns:1fr 1fr}.featured-grid .item-wide{grid-column:span 1}}
+@media(max-width:600px){.featured-grid{grid-template-columns:1fr}}
+
+/* ── SERVICES PREVIEW ── */
+.services-section{padding:120px 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;margin-top:64px}
+.service-card{background:var(--bg);padding:40px 32px;border:1px solid var(--border);transition:all .3s var(--trans);cursor:pointer;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:.4s var(--trans)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.sc-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#c8a96e15;border-radius:8px;margin-bottom:24px;font-size:22px}
+.sc-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px;color:var(--text)}
+.sc-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.sc-price{margin-top:20px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:120px 0}
+.testi-slider{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:64px}
+.testi-card{background:var(--bg2);border:1px solid var(--border);padding:36px;border-radius:8px;position:relative}
+.testi-card::before{content:'"';font-family:var(--serif);font-size:6rem;color:var(--gold);opacity:.3;position:absolute;top:16px;right:24px;line-height:1}
+.testi-text{font-family:var(--serif);font-size:1.1rem;font-weight:300;line-height:1.8;color:var(--text);margin-bottom:24px;font-style:italic}
+.testi-author{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.testi-role{font-size:12px;color:var(--text2);margin-top:4px}
+
+/* ── CTA ── */
+.cta-section{padding:120px 0;text-align:center;background:var(--bg2);border-top:1px solid var(--border)}
+.cta-section .section-title{margin:0 auto;max-width:700px}
+
+/* ── PORTFOLIO PAGE ── */
+.page-hero{padding:140px 0 80px;position:relative}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,#c8a96e08 0%,transparent 70%)}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px}
+.filter-btn{background:none;border:1px solid var(--border2);color:var(--text2);font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;border-radius:20px;cursor:pointer;transition:.2s}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.masonry{columns:3;gap:4px;padding:0}
+.masonry-item{break-inside:avoid;margin-bottom:4px;position:relative;overflow:hidden;cursor:pointer;background:var(--bg3)}
+.masonry-item img{width:100%;display:block;transition:transform .6s var(--trans)}
+.masonry-item:hover img{transform:scale(1.06)}
+.masonry-item .overlay{position:absolute;inset:0;background:#000a;opacity:0;transition:.3s;display:flex;align-items:center;justify-content:center}
+.masonry-item:hover .overlay{opacity:1}
+@media(max-width:900px){.masonry{columns:2}}
+@media(max-width:550px){.masonry{columns:1}}
+.videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-top:32px}
+.video-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .3s}
+.video-card:hover{transform:translateY(-4px)}
+.video-thumb{position:relative;aspect-ratio:16/9;background:var(--bg3)}
+.video-thumb img{width:100%;height:100%;object-fit:cover}
+.play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.play-circle{width:64px;height:64px;border-radius:50%;background:#000a;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold);transition:.3s;backdrop-filter:blur(4px)}
+.video-card:hover .play-circle{background:var(--gold);color:var(--bg);transform:scale(1.1)}
+.video-info{padding:20px}
+.video-info h3{font-family:var(--serif);font-size:1.2rem;font-weight:300;margin-bottom:8px}
+.video-info p{font-size:13px;color:var(--text2)}
+
+/* ── SERVICES PAGE ── */
+.services-page{padding:140px 0 80px}
+.services-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-top:48px}
+.service-page-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:40px;position:relative;overflow:hidden;transition:.3s}
+.service-page-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.spc-badge{position:absolute;top:24px;right:24px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px}
+.spc-icon{font-size:36px;margin-bottom:20px}
+.spc-title{font-family:var(--serif);font-size:1.6rem;font-weight:300;margin-bottom:12px}
+.spc-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+.spc-features{list-style:none;margin-bottom:28px}
+.spc-features li{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.spc-features li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.spc-price{font-family:var(--serif);font-size:1.6rem;color:var(--gold);margin-bottom:20px}
+.spc-delivery{font-size:12px;color:var(--text2);margin-bottom:24px;letter-spacing:.05em}
+
+/* ── BOOKING PAGE ── */
+.booking-page{padding:140px 0 80px}
+.booking-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:48px}
+.booking-info h2{font-family:var(--serif);font-size:2rem;font-weight:300;margin-bottom:16px}
+.booking-info p{color:var(--text2);font-size:14px;line-height:1.8;margin-bottom:32px}
+.booking-contact-list{list-style:none;display:flex;flex-direction:column;gap:16px}
+.bcl-item{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text2)}
+.bcl-icon{width:40px;height:40px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.booking-form-wrap{background:var(--bg2);border:1px solid var(--border);padding:48px;border-radius:8px}
+@media(max-width:900px){.booking-wrap{grid-template-columns:1fr;gap:40px}}
+
+/* ── ABOUT PAGE ── */
+.about-page{padding:140px 0 80px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px}
+.about-img{position:relative}
+.about-img img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px}
+.about-img-badge{position:absolute;bottom:-24px;right:-24px;background:var(--gold);color:var(--bg);padding:24px;text-align:center}
+.abi-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;display:block;line-height:1}
+.abi-txt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.about-text h2{font-family:var(--serif);font-size:2.5rem;font-weight:300;margin-bottom:24px;line-height:1.2}
+.about-text p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:20px}
+.skills-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.skill-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+.skill-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}.about-img-badge{right:0}}
+
+/* ── CONTACT PAGE ── */
+.contact-page{padding:140px 0 80px}
+.contact-grid{display:grid;grid-template-columns:1fr 2fr;gap:80px;margin-top:64px}
+.contact-info h3{font-family:var(--serif);font-size:1.5rem;font-weight:300;margin-bottom:24px}
+.contact-item{display:flex;gap:16px;margin-bottom:28px}
+.ci-icon{width:44px;height:44px;border-radius:8px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ci-lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:4px}
+.ci-val{font-size:14px;color:var(--text)}
+.social-links{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.social-link{width:40px;height:40px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text2);text-decoration:none;transition:.2s}
+.social-link:hover{border-color:var(--gold);color:var(--gold)}
+.contact-form-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:48px}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:40px}}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px}
+.footer-brand .logo{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--text);margin-bottom:16px}
+.footer-brand .logo span{color:var(--gold)}
+.footer-brand p{font-size:13px;color:var(--text2);line-height:1.8;max-width:280px}
+.footer-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col li button,.footer-col li a{background:none;border:none;color:var(--text2);font-family:var(--sans);font-size:13px;cursor:pointer;padding:0;text-decoration:none;text-align:left;transition:.2s}
+.footer-col li button:hover,.footer-col li a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:12px;color:var(--text3)}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;background:#000d;z-index:9000;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s}
+.lightbox img{max-width:92vw;max-height:92vh;object-fit:contain;border-radius:4px;box-shadow:0 24px 80px #000}
+.lightbox-close{position:absolute;top:24px;right:24px;background:none;border:1px solid var(--border2);color:var(--text);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.lightbox-close:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* ── ADMIN DASHBOARD ── */
+#admin-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px}
+.login-card{width:100%;max-width:420px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:48px}
+.login-logo{font-family:var(--serif);font-size:2rem;font-weight:300;text-align:center;margin-bottom:8px}
+.login-logo span{color:var(--gold)}
+.login-sub{text-align:center;font-size:13px;color:var(--text2);margin-bottom:40px}
+
+#admin{min-height:100vh;display:flex;background:var(--bg)}
+.admin-sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:500}
+.admin-logo{padding:28px 24px;border-bottom:1px solid var(--border)}
+.admin-logo .logo{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:var(--text)}
+.admin-logo .logo span{color:var(--gold)}
+.admin-logo p{font-size:11px;color:var(--text2);margin-top:4px;letter-spacing:.05em}
+.admin-nav{padding:16px 12px;flex:1}
+.admin-nav-section{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);padding:16px 12px 8px;font-weight:500}
+.admin-nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--text2);transition:.15s;width:100%;background:none;border:none;font-family:var(--sans);text-align:left}
+.admin-nav-item:hover{background:var(--bg3);color:var(--text)}
+.admin-nav-item.active{background:#c8a96e18;color:var(--gold)}
+.admin-nav-item .icon{font-size:16px;width:20px;text-align:center}
+.admin-nav-item .badge{margin-left:auto;background:#c0392b;color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500}
+.admin-footer{padding:16px 24px;border-top:1px solid var(--border)}
+.admin-user{display:flex;align-items:center;gap:12px}
+.admin-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);flex-shrink:0}
+.admin-user-info .name{font-size:13px;color:var(--text);font-weight:500}
+.admin-user-info .role{font-size:11px;color:var(--text2)}
+.admin-main{flex:1;margin-left:260px;display:flex;flex-direction:column;min-height:100vh}
+.admin-topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-title h1{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--text)}
+.topbar-title p{font-size:12px;color:var(--text2)}
+.topbar-actions{display:flex;align-items:center;gap:12px}
+.admin-content{padding:32px;flex:1}
+
+/* Admin Panels */
+.admin-panel{display:none}
+.admin-panel.active{display:block;animation:fadeIn .3s var(--trans)}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent)}
+.stat-icon{font-size:24px;margin-bottom:12px;display:block}
+.stat-value{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--text);display:block;line-height:1}
+.stat-label{font-size:12px;color:var(--text2);margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+
+/* Tables */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{text-align:left;padding:12px 16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);font-weight:500}
+.data-table td{padding:14px 16px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border);vertical-align:middle}
+.data-table tr:hover td{background:var(--bg3)}
+.data-table .actions{display:flex;gap:8px;align-items:center}
+.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:auto}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.table-header h3{font-family:var(--serif);font-size:1.2rem;font-weight:300}
+.search-input{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 14px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;outline:none;width:220px}
+.search-input:focus{border-color:var(--gold)}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.media-item{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/3;background:var(--bg3);cursor:pointer;border:2px solid transparent;transition:.2s}
+.media-item:hover{border-color:var(--gold)}
+.media-item img{width:100%;height:100%;object-fit:cover}
+.media-item .mi-actions{position:absolute;inset:0;background:#000a;opacity:0;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.media-item:hover .mi-actions{opacity:1}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;padding-right:36px}
+.select-wrap::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none;font-size:12px}
+
+@media(max-width:768px){
+  .admin-sidebar{transform:translateX(-100%);transition:.3s}
+  .admin-sidebar.open{transform:none}
+  .admin-main{margin-left:0}
+  .admin-content{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ PUBLIC SITE ═══════════════════════════════ -->
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-logo" onclick="showPage('home')">LUM<span>I</span>ÈRE</a>
+      <div class="nav-links" id="nav-links">
+        <button class="nav-link active" onclick="showPage('home');closeMenu()">Home</button>
+        <button class="nav-link" onclick="showPage('portfolio');closeMenu()">Portfolio</button>
+        <button class="nav-link" onclick="showPage('services');closeMenu()">Services</button>
+        <button class="nav-link" onclick="showPage('about');closeMenu()">About</button>
+        <button class="nav-link" onclick="showPage('contact');closeMenu()">Contact</button>
+        <button class="btn btn-gold btn-sm nav-book" onclick="showPage('booking');closeMenu()">Book Now</button>
+      </div>
+      <button id="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb1"></div>
+    <div class="hero-orb hero-orb2"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-label">Visual Storytelling Studio</div>
+        <h1 class="hero-title">Capturing <em>Stories</em><br>Through Timeless<br>Photography</h1>
+        <p class="hero-sub">Every frame tells a story. Every moment deserves to be remembered with intention, emotion, and cinematic grace.</p>
+        <div class="hero-btns">
+          <button class="btn btn-gold" onclick="showPage('portfolio')">View Portfolio</button>
+          <button class="btn btn-outline" onclick="showPage('booking')">Book a Session</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">320+</span><span class="stat-lbl">Projects</span></div>
+      <div class="stat-item"><span class="stat-num">8</span><span class="stat-lbl">Years</span></div>
+      <div class="stat-item"><span class="stat-num">98%</span><span class="stat-lbl">Satisfied</span></div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- FEATURED PORTFOLIO -->
+  <section class="featured">
+    <div class="container">
+      <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+        <div>
+          <div class="section-label">Selected Work</div>
+          <h2 class="section-title">Portfolio <em>Highlights</em></h2>
+        </div>
+        <button class="btn btn-outline" onclick="showPage('portfolio')">View All Work →</button>
+      </div>
+      <div class="featured-grid" id="featured-grid"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="services-section">
+    <div class="container">
+      <div class="section-label">What I Offer</div>
+      <h2 class="section-title">Creative <em>Services</em></h2>
+      <div class="services-grid" id="services-preview"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-label">Client Words</div>
+      <h2 class="section-title">What They <em>Say</em></h2>
+      <div class="testi-slider" id="testimonials-list"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="section-label">Ready to Begin?</div>
+      <h2 class="section-title" style="text-align:center;margin:0 auto 32px">Let's Create Something <em>Unforgettable</em></h2>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="showPage('booking')">Book a Session</button>
+        <button class="btn btn-outline" onclick="showPage('contact')">Get in Touch</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">LUM<span>I</span>ÈRE</div>
+          <p>Premium photography & videography studio. We capture your most precious moments with artistry and intention.</p>
+          <div class="social-links" style="margin-top:24px">
+            <a class="social-link" href="#">📸</a>
+            <a class="social-link" href="#">🎬</a>
+            <a class="social-link" href="#">▶️</a>
+            <a class="social-link" href="#">💼</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><button onclick="showPage('home')">Home</button></li>
+            <li><button onclick="showPage('portfolio')">Portfolio</button></li>
+            <li><button onclick="showPage('services')">Services</button></li>
+            <li><button onclick="showPage('about')">About</button></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><button onclick="showPage('services')">Wedding Photography</button></li>
+            <li><button onclick="showPage('services')">Portrait Sessions</button></li>
+            <li><button onclick="showPage('services')">Event Coverage</button></li>
+            <li><button onclick="showPage('services')">Brand Videos</button></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><button onclick="showPage('contact')">Contact</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 LUMIÈRE Studio. All rights reserved.</p>
+        <p style="cursor:pointer;color:var(--text2)" onclick="showAdminLogin()">Admin</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- PORTFOLIO PAGE -->
+<div id="page-portfolio" class="page">
+  <div class="page-hero">
+    <div class="container">
+      <div class="section-label">Creative Work</div>
+      <h1 class="section-title">Our <em>Portfolio</em></h1>
+      <p class="section-sub">A curated selection of photography and videography spanning weddings, portraits, commercial, and editorial work.</p>
+    </div>
+  </div>
+  <div class="container" style="padding-bottom:80px">
+    <div class="filter-bar" id="portfolio-filters"></div>
+    <div class="masonry" id="portfolio-grid"></div>
+    <div id="videos-section" style="margin-top:48px">
+      <h2 class="section-title" style="margin-bottom:32px">Video <em>Showreel</em></h2>
+      <div class="videos-grid" id="videos-grid"></div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2025 LUMIÈRE Studio</p>
+        <button class="btn btn-gold btn-sm" onclick="showPage('booking')">Book Now</button>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- SERVICES PAGE -->
+<div id="page-services" class="page">
+  <div class="services-page">
+    <div class="container">
+      <div class="section-label">What We Do</div>
+      <h1 class="section-title">Our <em>Services</em></h1>
+      <p class="section-sub">Professional photography and videography tailored to your needs, delivered with artistry and precision.</p>
+      <div class="services-page-grid" id="services-page-grid"></div>
+    </div>
+  </div>
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;margin-bottom:32px">Ready to <em>Start?</em></h2>
+      <button class="btn btn-gold" onclick="showPage('booking')">Book Your Session →</button>
+    </div>
+  </section>
+  <footer><div class="container"><div class="footer-bottom"><p>© 2025 LUMIÈRE Studio</p></div></div></footer>
+</div>
+
+<!-- BOOKING PAGE -->
+<div id="page-booking" class="page">
+  <div class="booking-page">
+    <div class="container">
+      <div class="section-label">Let's Work Together</div>
+      <h1 class="section-title">Book a <em>Session</em></h1>
+      <div class="booking-wrap">
+        <div class="booking-info">
+          <h2>Let's create something beautiful together</h2>
+          <p>Fill out the form and I'll get back to you within 24 hours to discuss your project, availability, and pricing.</p>
+          <ul class="booking-contact-list">
+            <li class="bcl-item"><span class="bcl-icon">📧</span> hello@lumiere.studio</li>
+            <li class="bcl-item"><span class="bcl-icon">📱</span> +1 (555) 000-0000</li>
+            <li class="bcl-item"><span class="bcl-icon">💬</span> WhatsApp Available</li>
+            <li class="bcl-item"><span class="bcl-icon">📍</span> Serving Worldwide</li>
+          </ul>
+        </div>
+        <div class="booking-form-wrap">
+          <form id="booking-form" onsubmit="submitBooking(event)">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name *</label><input id="b-name" required placeholder="Your full name"></div>
+              <div class="form-group"><label>Email *</label><input id="b-email" type="email" required placeholder="your@email.com"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Phone / WhatsApp</label><input id="b-phone" placeholder="+1 555 000 0000"></div>
+              <div class="form-group"><label>Service Type *</label>
+                <div class="select-wrap"><select id="b-service" required>
+                  <option value="">Select a service</option>
+                  <option>Wedding Photography</option><option>Wedding Videography</option>
+                  <option>Portrait Session</option><option>Event Coverage</option>
+                  <option>Commercial Photography</option><option>Brand Video</option>
+                  <option>Social Media Content</option><option>Custom Package</option>
+                </select></div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Event Date</label><input id="b-date" type="date"></div>
+              <div class="form-group"><label>Location</label><input id="b-location" placeholder="City, Country"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Budget Range</label>
+                <div class="select-wrap"><select id="b-budget">
+                  <option value="">Select range</option>
+                  <option>Under $500</option><option>$500 - $1,000</option>
+                  <option>$1,000 - $3,000</option><option>$3,000 - $5,000</option>
+                  <option>$5,000+</option><option>Custom Quote</option>
+                </select></div>
+              </div>
+              <div class="form-group"><label>Preferred Style</label>
+                <div class="select-wrap"><select id="b-style">
+                  <option value="">Select style</option>
+                  <option>Documentary / Candid</option><option>Editorial / Posed</option>
+                  <option>Dark & Moody</option><option>Light & Airy</option>
+                  <option>Cinematic</option><option>Fine Art</option>
+                </select></div>
+              </div>
+            </div>
+            <div class="form-group"><label>Project Details *</label><textarea id="b-details" rows="4" required placeholder="Tell me about your vision, the occasion, any special requirements..."></textarea></div>
+            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Send Booking Request →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container"><div class="footer-bottom"><p>© 2025 LUMIÈRE Studio</p></div></div></footer>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <div class="about-page">
+    <div class="container">
+      <div class="section-label">The Storyteller</div>
+      <div class="about-grid">
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop" alt="Photographer">
+          <div class="about-img-badge">
+            <span class="abi-num">8+</span>
+            <span class="abi-txt">Years of Experience</span>
+          </div>
+        </div>
+        <div class="about-text">
+          <div class="section-label">About LUMIÈRE</div>
+          <h2>Crafting <em style="color:var(--gold);font-style:italic">Visual</em><br>Narratives</h2>
+          <div class="divider"></div>
+          <p>I'm a professional photographer and videographer with over 8 years of experience capturing life's most meaningful moments. From intimate portrait sessions to grand weddings, I approach every project with the same dedication to craft and storytelling.</p>
+          <p>My work is driven by a deep belief that great photography is about connection — understanding your vision and translating it into images that evoke genuine emotion. I specialize in a cinematic, editorial style that balances artistry with authenticity.</p>
+          <p>Based globally, I've worked with clients across three continents and collaborated with luxury brands, editorial publications, and couples seeking to preserve their most precious memories.</p>
+          <div class="skills-list">
+            <div class="skill-item"><span class="skill-dot"></span>Wedding Photography</div>
+            <div class="skill-item"><span class="skill-dot"></span>Cinematic Videography</div>
+            <div class="skill-item"><span class="skill-dot"></span>Portrait Sessions</div>
+            <div class="skill-item"><span class="skill-dot"></span>Commercial Work</div>
+            <div class="skill-item"><span class="skill-dot"></span>Event Coverage</div>
+            <div class="skill-item"><span class="skill-dot"></span>Post-Production & Editing</div>
+          </div>
+          <div style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap">
+            <button class="btn btn-gold" onclick="showPage('booking')">Book a Session</button>
+            <button class="btn btn-outline" onclick="showPage('portfolio')">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container"><div class="footer-bottom"><p>© 2025 LUMIÈRE Studio</p></div></div></footer>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page">
+  <div class="contact-page">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h1 class="section-title">Contact <em>Us</em></h1>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Let's talk about your project</h3>
+          <div class="contact-item">
+            <div class="ci-icon">📧</div>
+            <div><div class="ci-lbl">Email</div><div class="ci-val">hello@lumiere.studio</div></div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📱</div>
+            <div><div class="ci-lbl">Phone</div><div class="ci-val">+1 (555) 000-0000</div></div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">💬</div>
+            <div><div class="ci-lbl">WhatsApp</div><div class="ci-val">+1 (555) 000-0001</div></div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div><div class="ci-lbl">Studio</div><div class="ci-val">New York, NY — Available Worldwide</div></div>
+          </div>
+          <div class="social-links">
+            <a class="social-link" href="#">📸</a>
+            <a class="social-link" href="#">🎬</a>
+            <a class="social-link" href="#">▶️</a>
+            <a class="social-link" href="#">💼</a>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <form id="contact-form" onsubmit="submitContact(event)">
+            <div class="form-row">
+              <div class="form-group"><label>Name *</label><input id="c-name" required placeholder="Your name"></div>
+              <div class="form-group"><label>Email *</label><input id="c-email" type="email" required placeholder="your@email.com"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Phone</label><input id="c-phone" placeholder="+1 555 000 0000"></div>
+              <div class="form-group"><label>Subject</label><input id="c-subject" placeholder="How can I help?"></div>
+            </div>
+            <div class="form-group"><label>Message *</label><textarea id="c-msg" rows="5" required placeholder="Tell me about your project or inquiry..."></textarea></div>
+            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Send Message →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="container"><div class="footer-bottom"><p>© 2025 LUMIÈRE Studio</p></div></div></footer>
+</div>
+
+<!-- ═══════════════════════════════ ADMIN ═══════════════════════════════ -->
+
+<!-- ADMIN LOGIN -->
+<div id="admin-login" class="hidden">
+  <div class="login-card">
+    <div class="login-logo">LUM<span>I</span>ÈRE</div>
+    <div class="login-sub">Admin Dashboard — Secure Access</div>
+    <form onsubmit="adminLogin(event)">
+      <div class="form-group"><label>Email</label><input id="login-email" type="email" value="admin@lumiere.studio" required></div>
+      <div class="form-group"><label>Password</label><input id="login-pass" type="password" value="admin123" required></div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px">Sign In →</button>
+    </form>
+    <p style="text-align:center;font-size:12px;color:var(--text2);margin-top:20px">Demo: admin@lumiere.studio / admin123</p>
+    <button onclick="showPublicSite()" style="display:block;width:100%;text-align:center;margin-top:12px;background:none;border:none;color:var(--text2);font-size:12px;cursor:pointer;font-family:var(--sans)">← Back to Website</button>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="admin" class="hidden">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="admin-logo">
+      <div class="logo">LUM<span>I</span>ÈRE</div>
+      <p>Admin Dashboard</p>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-section">Overview</div>
+      <button class="admin-nav-item active" onclick="showAdminPanel('dashboard')"><span class="icon">📊</span>Dashboard</button>
+      <div class="admin-nav-section">Content</div>
+      <button class="admin-nav-item" onclick="showAdminPanel('portfolio-mgmt')"><span class="icon">🖼️</span>Portfolio</button>
+      <button class="admin-nav-item" onclick="showAdminPanel('services-mgmt')"><span class="icon">💼</span>Services</button>
+      <button class="admin-nav-item" onclick="showAdminPanel('testimonials-mgmt')"><span class="icon">💬</span>Testimonials</button>
+      <div class="admin-nav-section">Clients</div>
+      <button class="admin-nav-item" onclick="showAdminPanel('bookings-mgmt')" id="nav-bookings"><span class="icon">📅</span>Bookings <span class="badge" id="new-bookings-badge" style="display:none">0</span></button>
+      <button class="admin-nav-item" onclick="showAdminPanel('messages-mgmt')" id="nav-messages"><span class="icon">✉️</span>Messages <span class="badge" id="new-messages-badge" style="display:none">0</span></button>
+      <div class="admin-nav-section">System</div>
+      <button class="admin-nav-item" onclick="showAdminPanel('settings-mgmt')"><span class="icon">⚙️</span>Settings</button>
+    </nav>
+    <div class="admin-footer">
+      <div class="admin-user">
+        <div class="admin-avatar">A</div>
+        <div class="admin-user-info">
+          <div class="name">Admin</div>
+          <div class="role">Super Admin</div>
+        </div>
+        <button onclick="adminLogout()" title="Logout" style="margin-left:auto;background:none;border:none;color:var(--text2);cursor:pointer;font-size:16px">🚪</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="topbar-title">
+        <h1 id="panel-title">Dashboard</h1>
+        <p id="panel-sub">Welcome back, Admin</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="showPublicSite()">← View Site</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div id="panel-dashboard" class="admin-panel active">
+        <div class="stats-grid" id="admin-stats"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div class="table-wrap">
+            <div class="table-header"><h3>Recent Bookings</h3></div>
+            <table class="data-table"><thead><tr><th>Name</th><th>Service</th><th>Status</th></tr></thead>
+            <tbody id="recent-bookings"></tbody></table>
+          </div>
+          <div class="table-wrap">
+            <div class="table-header"><h3>Recent Messages</h3></div>
+            <table class="data-table"><thead><tr><th>Name</th><th>Subject</th><th>Status</th></tr></thead>
+            <tbody id="recent-messages"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PORTFOLIO MANAGEMENT -->
+      <div id="panel-portfolio-mgmt" class="admin-panel">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>Portfolio Items</h3>
+            <button class="btn btn-gold btn-sm" onclick="openPortfolioModal()">+ Add Item</button>
+          </div>
+          <div style="padding:16px"><div class="media-grid" id="admin-portfolio-grid"></div></div>
+        </div>
+      </div>
+
+      <!-- SERVICES MANAGEMENT -->
+      <div id="panel-services-mgmt" class="admin-panel">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>Services</h3>
+            <button class="btn btn-gold btn-sm" onclick="openServiceModal()">+ Add Service</button>
+          </div>
+          <table class="data-table"><thead><tr><th>Title</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="services-table"></tbody></table>
+        </div>
+      </div>
+
+      <!-- BOOKINGS MANAGEMENT -->
+      <div id="panel-bookings-mgmt" class="admin-panel">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>All Bookings</h3>
+            <input class="search-input" placeholder="Search bookings..." oninput="filterBookings(this.value)">
+          </div>
+          <table class="data-table"><thead><tr><th>Name</th><th>Service</th><th>Date</th><th>Budget</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="bookings-table"></tbody></table>
+        </div>
+      </div>
+
+      <!-- MESSAGES MANAGEMENT -->
+      <div id="panel-messages-mgmt" class="admin-panel">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>Contact Messages</h3>
+            <input class="search-input" placeholder="Search messages..." oninput="filterMessages(this.value)">
+          </div>
+          <table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="messages-table"></tbody></table>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS MANAGEMENT -->
+      <div id="panel-testimonials-mgmt" class="admin-panel">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>Testimonials</h3>
+            <button class="btn btn-gold btn-sm" onclick="openTestimonialModal()">+ Add Testimonial</button>
+          </div>
+          <table class="data-table"><thead><tr><th>Client</th><th>Feedback</th><th>Active</th><th>Actions</th></tr></thead>
+          <tbody id="testimonials-table"></tbody></table>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="panel-settings-mgmt" class="admin-panel">
+        <div style="max-width:700px">
+          <div class="card" style="padding:40px;border:1px solid var(--border2)">
+            <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:300;margin-bottom:28px">Site Settings</h3>
+            <div class="form-row">
+              <div class="form-group"><label>Brand Name</label><input id="s-brand" value="LUMIÈRE"></div>
+              <div class="form-group"><label>Tagline</label><input id="s-tagline" value="Photography & Videography Studio"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Email</label><input id="s-email" value="hello@lumiere.studio"></div>
+              <div class="form-group"><label>Phone</label><input id="s-phone" value="+1 (555) 000-0000"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Instagram</label><input id="s-insta" value="@lumiere_studio"></div>
+              <div class="form-group"><label>YouTube</label><input id="s-yt" value="@LumiereStudio"></div>
+            </div>
+            <div class="form-group"><label>Hero Title</label><input id="s-hero-title" value="Capturing Stories Through Timeless Photography"></div>
+            <div class="form-group"><label>Hero Subtitle</label><textarea id="s-hero-sub" rows="2">Every frame tells a story. Every moment deserves to be remembered with intention, emotion, and cinematic grace.</textarea></div>
+            <div class="form-group"><label>SEO Description</label><textarea id="s-seo" rows="2">Premium photography and videography studio specializing in weddings, portraits, and commercial work.</textarea></div>
+            <button class="btn btn-gold" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+
+<!-- Portfolio Modal -->
+<div id="portfolio-modal" class="modal-overlay hidden" onclick="closeModalOverlay(event,'portfolio-modal')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('portfolio-modal')">✕</button>
+    <h2 id="pm-title">Add Portfolio Item</h2>
+    <input type="hidden" id="pm-id">
+    <div class="form-row">
+      <div class="form-group"><label>Title *</label><input id="pm-item-title" required placeholder="Project title"></div>
+      <div class="form-group"><label>Category</label>
+        <div class="select-wrap"><select id="pm-cat">
+          <option value="photography">Photography</option><option value="videography">Videography</option>
+          <option value="wedding">Wedding</option><option value="portrait">Portrait</option>
+          <option value="event">Event</option><option value="commercial">Commercial</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Type</label>
+        <div class="select-wrap"><select id="pm-type">
+          <option value="photo">Photo</option><option value="video">Video</option>
+        </select></div>
+      </div>
+      <div class="form-group"><label>Client Name</label><input id="pm-client" placeholder="Optional"></div>
+    </div>
+    <div class="form-group"><label>Image URL</label><input id="pm-img" placeholder="https://... or leave for placeholder"></div>
+    <div class="form-group"><label>Description</label><textarea id="pm-desc" rows="3" placeholder="Brief project description..."></textarea></div>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+      <button class="btn btn-ghost" onclick="closeModal('portfolio-modal')">Cancel</button>
+      <button class="btn btn-gold" onclick="savePortfolioItem()">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- Service Modal -->
+<div id="service-modal" class="modal-overlay hidden" onclick="closeModalOverlay(event,'service-modal')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('service-modal')">✕</button>
+    <h2 id="sm-title">Add Service</h2>
+    <input type="hidden" id="sm-id">
+    <div class="form-row">
+      <div class="form-group"><label>Service Title *</label><input id="sm-name" required placeholder="Service name"></div>
+      <div class="form-group"><label>Icon (emoji)</label><input id="sm-icon" placeholder="📷" value="📷"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Price Label</label><input id="sm-price" placeholder="From $500"></div>
+      <div class="form-group"><label>Delivery Time</label><input id="sm-delivery" placeholder="2-3 weeks"></div>
+    </div>
+    <div class="form-group"><label>Short Description</label><textarea id="sm-short" rows="2" placeholder="One line summary..."></textarea></div>
+    <div class="form-group"><label>Full Description</label><textarea id="sm-full" rows="3" placeholder="Detailed description..."></textarea></div>
+    <div class="form-group"><label>Features (comma separated)</label><input id="sm-features" placeholder="High-res gallery, Edited photos, Online delivery..."></div>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+      <button class="btn btn-ghost" onclick="closeModal('service-modal')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveService()">Save Service</button>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonial Modal -->
+<div id="testi-modal" class="modal-overlay hidden" onclick="closeModalOverlay(event,'testi-modal')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('testi-modal')">✕</button>
+    <h2 id="tm-title">Add Testimonial</h2>
+    <input type="hidden" id="tm-id">
+    <div class="form-row">
+      <div class="form-group"><label>Client Name *</label><input id="tm-name" required placeholder="Client name"></div>
+      <div class="form-group"><label>Role / Company</label><input id="tm-role" placeholder="Bride, CEO, etc."></div>
+    </div>
+    <div class="form-group"><label>Feedback *</label><textarea id="tm-text" rows="4" required placeholder="Client testimonial..."></textarea></div>
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+      <button class="btn btn-ghost" onclick="closeModal('testi-modal')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveTestimonial()">Save Testimonial</button>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Detail Modal -->
+<div id="booking-modal" class="modal-overlay hidden" onclick="closeModalOverlay(event,'booking-modal')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('booking-modal')">✕</button>
+    <h2>Booking Details</h2>
+    <div id="booking-detail-content"></div>
+    <div id="booking-status-section" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px">
+      <label>Update Status</label>
+      <div class="select-wrap" style="max-width:250px;margin-top:8px">
+        <select id="booking-status-select">
+          <option value="new">New</option><option value="contacted">Contacted</option>
+          <option value="quote_sent">Quote Sent</option><option value="confirmed">Confirmed</option>
+          <option value="in_progress">In Progress</option><option value="completed">Completed</option>
+          <option value="canceled">Canceled</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-top:16px"><label>Internal Notes</label><textarea id="booking-notes" rows="3" placeholder="Admin notes..."></textarea></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <button class="btn btn-gold" onclick="updateBookingStatus()">Update Status</button>
+        <button class="btn btn-danger" onclick="deleteBooking()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Message Detail Modal -->
+<div id="message-modal" class="modal-overlay hidden" onclick="closeModalOverlay(event,'message-modal')">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('message-modal')">✕</button>
+    <h2>Message</h2>
+    <div id="message-detail-content"></div>
+    <div style="display:flex;gap:12px;margin-top:24px">
+      <button class="btn btn-gold btn-sm" onclick="markMessageRead()">Mark Read</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteMessage()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox hidden" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<script>
+// ═══════════════════════ STATE ═══════════════════════
+
+let state = {
+  portfolioItems: [],
+  services: [],
+  bookings: [],
+  messages: [],
+  testimonials: [],
+  currentBookingId: null,
+  currentMessageId: null,
+  filterActive: 'all'
+};
+
+// ═══════════════════════ DATA INIT ═══════════════════════
+
+function initData(){
+  const saved = localStorage.getItem('lumiere_data');
+  if(saved){ state = {...state, ...JSON.parse(saved)}; return; }
+
+  const UNSPLASH = (id)=>`https://images.unsplash.com/photo-${id}?w=600&auto=format&fit=crop`;
+
+  state.portfolioItems = [
+    {id:1,title:'Golden Hour Wedding',category:'wedding',type:'photo',client:'Sarah & James',img:UNSPLASH('1519741347686-c1e0aadf4611'),desc:'An intimate garden wedding bathed in golden hour light.'},
+    {id:2,title:'Urban Portrait Series',category:'portrait',type:'photo',client:'Editorial Magazine',img:UNSPLASH('1531746020798-e6953c6e8e04'),desc:'High-contrast editorial portraits shot on location.'},
+    {id:3,title:'Brand Campaign',category:'commercial',type:'photo',client:'Luxe Brand Co.',img:UNSPLASH('1441986300917-64674bd600d8'),desc:'Commercial product photography for a luxury fashion brand.'},
+    {id:4,title:'Mountain Elopement',category:'wedding',type:'photo',client:'Emma & Luca',img:UNSPLASH('1510904144866-4623decbe2b0'),desc:'A breathtaking mountaintop ceremony at sunrise.'},
+    {id:5,title:'Corporate Event Coverage',category:'event',type:'photo',client:'Tech Summit',img:UNSPLASH('1505373877841-8d25f7d46678'),desc:'Professional event documentation for annual conference.'},
+    {id:6,title:'Cinematic Wedding Film',category:'wedding',type:'video',client:'Olivia & Marco',img:UNSPLASH('1511285560929-80b5a93c548a'),desc:'Feature-length wedding documentary film.'},
+    {id:7,title:'Fashion Lookbook',category:'commercial',type:'photo',client:'NOVA Clothing',img:UNSPLASH('1469334031218-e382a71b716b'),desc:'Spring/Summer lookbook campaign.'},
+    {id:8,title:'Brand Story Video',category:'commercial',type:'video',client:'Artisan Coffee Co.',img:UNSPLASH('1495474472287-4d71bcdd2085'),desc:'Cinematic brand story documentary.'},
+  ];
+
+  state.services = [
+    {id:1,title:'Wedding Photography',icon:'💍',price:'From $2,500',delivery:'4-6 weeks',shortDesc:'Complete wedding day coverage with artistry and heart.',fullDesc:'Full-day wedding photography coverage capturing every emotion, detail, and candid moment.',features:['8-10 hours coverage','Online gallery','400+ edited photos','Engagement session']},
+    {id:2,title:'Portrait Sessions',icon:'🎭',price:'From $350',delivery:'1-2 weeks',shortDesc:'Cinematic portrait photography for individuals and families.',fullDesc:'Studio or location portrait sessions with professional lighting and direction.',features:['2-hour session','30+ edited photos','Multiple looks','Print license']},
+    {id:3,title:'Event Coverage',icon:'🎉',price:'From $800',delivery:'2-3 weeks',shortDesc:'Professional event documentation that tells the full story.',fullDesc:'From corporate galas to private celebrations, comprehensive event documentation.',features:['Full event coverage','200+ edited photos','Same-week preview','Online gallery']},
+    {id:4,title:'Brand Video',icon:'🎬',price:'From $1,800',delivery:'3-4 weeks',shortDesc:'Cinematic brand storytelling that elevates your presence.',fullDesc:'Professional brand documentary and promotional video production.',features:['1-3 minute film','Color graded','Music licensed','3 revision rounds']},
+    {id:5,title:'Commercial Photography',icon:'📦',price:'From $600',delivery:'1-2 weeks',shortDesc:'Product and lifestyle photography for brands and businesses.',fullDesc:'High-quality commercial photography for e-commerce, advertising, and marketing.',features:['Product photography','Lifestyle shots','White background','Usage license']},
+    {id:6,title:'Social Media Content',icon:'📱',price:'From $450',delivery:'1 week',shortDesc:'Scroll-stopping content for Instagram, TikTok, and beyond.',fullDesc:'Custom social media content creation tailored to your brand and audience.',features:['10-20 photos/videos','Optimized formats','Caption suggestions','Monthly packages']},
+  ];
+
+  state.testimonials = [
+    {id:1,name:'Sarah & James',role:'Wedding Clients',text:'Absolutely breathtaking work. Our wedding photos exceeded every expectation. We will treasure them forever. The attention to detail and genuine care for our story was evident in every frame.',active:true},
+    {id:2,name:'Alexandra Chen',role:'CEO, Luxe Brand Co.',text:'Working with LUMIÈRE was a transformative experience for our brand. The commercial campaign they delivered was cinematic, luxurious, and perfectly on-brand. We will absolutely work together again.',active:true},
+    {id:3,name:'Marco Rossi',role:'Creative Director',text:'The brand film captured everything we stand for in just two minutes. It is now the centerpiece of our entire marketing strategy. Truly exceptional storytelling and technical mastery.',active:true},
+  ];
+
+  state.bookings = [
+    {id:1,name:'Elena Martinez',email:'elena@example.com',phone:'+1 555 1234',service:'Wedding Photography',date:'2025-09-15',location:'Tuscany, Italy',budget:'$3,000 - $5,000',style:'Dark & Moody',details:'Looking for a photographer for our destination wedding in Tuscany.',status:'new',notes:'',created:new Date().toISOString()},
+    {id:2,name:'James Wilson',email:'james@example.com',phone:'+1 555 5678',service:'Brand Video',date:'2025-08-01',location:'New York, NY',budget:'$1,000 - $3,000',style:'Cinematic',details:'Need a brand story video for our new product launch.',status:'contacted',notes:'Sent initial proposal',created:new Date(Date.now()-86400000).toISOString()},
+  ];
+
+  state.messages = [
+    {id:1,name:'Sofia Laurent',email:'sofia@example.com',phone:'',subject:'Portrait Session Inquiry',msg:'Hi! I would love to book a portrait session for my personal branding. Could you share availability and pricing?',read:false,created:new Date().toISOString()},
+    {id:2,name:'David Kim',email:'david@example.com',phone:'+1 555 9999',subject:'Event Coverage',msg:'We have a corporate gala on December 15th. Are you available and what would be your rate for 6 hours?',read:true,created:new Date(Date.now()-172800000).toISOString()},
+  ];
+
+  saveData();
+}
+
+function saveData(){
+  localStorage.setItem('lumiere_data',JSON.stringify({
+    portfolioItems:state.portfolioItems,
+    services:state.services,
+    bookings:state.bookings,
+    messages:state.messages,
+    testimonials:state.testimonials
+  }));
+}
+
+// ═══════════════════════ NAVIGATION ═══════════════════════
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById('page-'+name);
+  if(pg) pg.classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const map = {home:0,portfolio:1,services:2,about:4,contact:5};
+  const links = document.querySelectorAll('.nav-link');
+  if(map[name]!==undefined) links[map[name]]?.classList.add('active');
+  window.scrollTo(0,0);
+  document.getElementById('nav').classList.remove('scrolled');
+  // Render page-specific content
+  if(name==='home'){renderHome();}
+  if(name==='portfolio'){renderPortfolioPage();}
+  if(name==='services'){renderServicesPage();}
+  if(name==='booking'){renderBookingServices();}
+  // Hide admin
+  document.getElementById('admin').classList.add('hidden');
+  document.getElementById('admin-login').classList.add('hidden');
+  document.querySelectorAll('.page').forEach(p=>{ if(p.id!=='page-'+name) p.classList.remove('active'); });
+  pg?.classList.add('active');
+}
+
+function toggleMenu(){
+  document.getElementById('nav-links').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('nav-links').classList.remove('open');
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ═══════════════════════ HOME RENDER ═══════════════════════
+
+function renderHome(){
+  renderFeaturedGrid();
+  renderServicesPreview();
+  renderTestimonials();
+}
+
+function renderFeaturedGrid(){
+  const grid = document.getElementById('featured-grid');
+  const items = state.portfolioItems.slice(0,5);
+  grid.innerHTML = items.map((item,i)=>`
+    <div class="portfolio-item${i===0?' item-wide':''}" onclick="openLightbox('${item.img}')">
+      <img src="${item.img}" alt="${item.title}" loading="lazy">
+      <div class="overlay">
+        <div class="pi-meta">
+          <div class="pi-cat">${item.category}</div>
+          <div class="pi-title">${item.title}</div>
+        </div>
+        ${item.type==='video'?'<div class="pi-play">▶</div>':''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderServicesPreview(){
+  const icons = ['💍','🎭','🎉','🎬','📦','📱'];
+  const preview = document.getElementById('services-preview');
+  preview.innerHTML = state.services.slice(0,6).map((s,i)=>`
+    <div class="service-card" onclick="showPage('services')">
+      <div class="sc-icon">${s.icon||icons[i%icons.length]}</div>
+      <div class="sc-title">${s.title}</div>
+      <div class="sc-desc">${s.shortDesc}</div>
+      <div class="sc-price">${s.price}</div>
+    </div>
+  `).join('');
+}
+
+function renderTestimonials(){
+  const list = document.getElementById('testimonials-list');
+  const active = state.testimonials.filter(t=>t.active);
+  list.innerHTML = active.map(t=>`
+    <div class="testi-card">
+      <p class="testi-text">${t.text}</p>
+      <div class="testi-author">${t.name}</div>
+      <div class="testi-role">${t.role}</div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════ PORTFOLIO PAGE ═══════════════════════
+
+function renderPortfolioPage(){
+  const categories = ['all',...new Set(state.portfolioItems.map(i=>i.category))];
+  const filterBar = document.getElementById('portfolio-filters');
+  filterBar.innerHTML = categories.map(c=>`
+    <button class="filter-btn${state.filterActive===c?' active':''}" onclick="setFilter('${c}')">${c.charAt(0).toUpperCase()+c.slice(1)}</button>
+  `).join('');
+  renderMasonry();
+  renderVideosGrid();
+}
+
+function setFilter(cat){
+  state.filterActive = cat;
+  renderPortfolioPage();
+}
+
+function renderMasonry(){
+  const grid = document.getElementById('portfolio-grid');
+  const filtered = state.portfolioItems.filter(i=>i.type==='photo'&&(state.filterActive==='all'||i.category===state.filterActive));
+  grid.innerHTML = filtered.map(item=>`
+    <div class="masonry-item" onclick="openLightbox('${item.img}')">
+      <img src="${item.img}" alt="${item.title}" loading="lazy">
+      <div class="overlay">
+        <div style="text-align:center">
+          <div style="font-size:24px;color:var(--gold);margin-bottom:8px">🔍</div>
+          <div style="font-family:var(--serif);font-size:1.1rem">${item.title}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderVideosGrid(){
+  const vids = state.portfolioItems.filter(i=>i.type==='video'&&(state.filterActive==='all'||i.category===state.filterActive||state.filterActive==='videography'));
+  const sec = document.getElementById('videos-section');
+  sec.innerHTML = vids.length? `
+    <h2 class="section-title" style="margin-bottom:32px">Video <em>Showreel</em></h2>
+    <div class="videos-grid">${vids.map(v=>`
+      <div class="video-card">
+        <div class="video-thumb">
+          <img src="${v.img}" alt="${v.title}" loading="lazy">
+          <div class="play-btn"><div class="play-circle">▶</div></div>
+        </div>
+        <div class="video-info">
+          <h3>${v.title}</h3>
+          <p>${v.desc}</p>
+          <div class="tag tag-gold" style="margin-top:12px">${v.category}</div>
+        </div>
+      </div>
+    `).join('')}</div>` : '';
+}
+
+// ═══════════════════════ SERVICES PAGE ═══════════════════════
+
+function renderServicesPage(){
+  const grid = document.getElementById('services-page-grid');
+  grid.innerHTML = state.services.map(s=>`
+    <div class="service-page-card">
+      <div class="spc-badge">Available</div>
+      <div class="spc-icon">${s.icon}</div>
+      <h3 class="spc-title">${s.title}</h3>
+      <p class="spc-desc">${s.fullDesc||s.shortDesc}</p>
+      <ul class="spc-features">${(s.features||[]).map(f=>`<li>${f}</li>`).join('')}</ul>
+      <div class="spc-price">${s.price}</div>
+      <div class="spc-delivery">⏱ Delivery: ${s.delivery}</div>
+      <button class="btn btn-gold btn-sm" onclick="showPage('booking')">Book This Service</button>
+    </div>
+  `).join('');
+}
+
+function renderBookingServices(){
+  const sel = document.getElementById('b-service');
+  if(!sel) return;
+  const opts = ['<option value="">Select a service</option>',...state.services.map(s=>`<option>${s.title}</option>`)].join('');
+  sel.innerHTML = opts;
+}
+
+// ═══════════════════════ FORMS ═══════════════════════
+
+function submitBooking(e){
+  e.preventDefault();
+  const booking = {
+    id: Date.now(),
+    name: document.getElementById('b-name').value,
+    email: document.getElementById('b-email').value,
+    phone: document.getElementById('b-phone').value,
+    service: document.getElementById('b-service').value,
+    date: document.getElementById('b-date').value,
+    location: document.getElementById('b-location').value,
+    budget: document.getElementById('b-budget').value,
+    style: document.getElementById('b-style').value,
+    details: document.getElementById('b-details').value,
+    status: 'new', notes: '',
+    created: new Date().toISOString()
+  };
+  state.bookings.unshift(booking);
+  saveData();
+  document.getElementById('booking-form').reset();
+  showToast('Booking request sent! We\'ll contact you within 24 hours.','success');
+  updateBadges();
+}
+
+function submitContact(e){
+  e.preventDefault();
+  const msg = {
+    id: Date.now(),
+    name: document.getElementById('c-name').value,
+    email: document.getElementById('c-email').value,
+    phone: document.getElementById('c-phone').value,
+    subject: document.getElementById('c-subject').value,
+    msg: document.getElementById('c-msg').value,
+    read: false,
+    created: new Date().toISOString()
+  };
+  state.messages.unshift(msg);
+  saveData();
+  document.getElementById('contact-form').reset();
+  showToast('Message sent! We\'ll get back to you soon.','success');
+  updateBadges();
+}
+
+// ═══════════════════════ ADMIN ═══════════════════════
+
+function showAdminLogin(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('admin').classList.add('hidden');
+  document.getElementById('admin-login').classList.remove('hidden');
+}
+
+function adminLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-pass').value;
+  if(email==='admin@lumiere.studio' && pass==='admin123'){
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin').classList.remove('hidden');
+    showAdminPanel('dashboard');
+    updateBadges();
+  } else {
+    showToast('Invalid credentials','error');
+  }
+}
+
+function adminLogout(){
+  document.getElementById('admin').classList.add('hidden');
+  showPublicSite();
+}
+
+function showPublicSite(){
+  document.getElementById('admin').classList.add('hidden');
+  document.getElementById('admin-login').classList.add('hidden');
+  showPage('home');
+}
+
+function showAdminPanel(id){
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.admin-nav-item').forEach(n=>n.classList.remove('active'));
+  // Find and activate nav item
+  document.querySelectorAll('.admin-nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')?.includes(id)) n.classList.add('active');
+  });
+  // Update title
+  const titles = {'dashboard':['Dashboard','Overview & quick stats'],'portfolio-mgmt':['Portfolio','Manage your work'],'services-mgmt':['Services','Manage offerings'],'bookings-mgmt':['Bookings','Client booking requests'],'messages-mgmt':['Messages','Contact inquiries'],'testimonials-mgmt':['Testimonials','Client feedback'],'settings-mgmt':['Settings','Website configuration']};
+  const t = titles[id]||[id,''];
+  document.getElementById('panel-title').textContent = t[0];
+  document.getElementById('panel-sub').textContent = t[1];
+  // Render panel content
+  if(id==='dashboard') renderDashboard();
+  if(id==='portfolio-mgmt') renderAdminPortfolio();
+  if(id==='services-mgmt') renderAdminServices();
+  if(id==='bookings-mgmt') renderAdminBookings();
+  if(id==='messages-mgmt') renderAdminMessages();
+  if(id==='testimonials-mgmt') renderAdminTestimonials();
+}
+
+function updateBadges(){
+  const newB = state.bookings.filter(b=>b.status==='new').length;
+  const unreadM = state.messages.filter(m=>!m.read).length;
+  const bb = document.getElementById('new-bookings-badge');
+  const mb = document.getElementById('new-messages-badge');
+  bb.textContent = newB; bb.style.display = newB?'':'none';
+  mb.textContent = unreadM; mb.style.display = unreadM?'':'none';
+}
+
+// ─── Dashboard ───
+
+function renderDashboard(){
+  const stats = [
+    {icon:'🖼️',value:state.portfolioItems.length,label:'Portfolio Items'},
+    {icon:'💼',value:state.services.length,label:'Services'},
+    {icon:'📅',value:state.bookings.length,label:'Total Bookings'},
+    {icon:'🆕',value:state.bookings.filter(b=>b.status==='new').length,label:'New Bookings'},
+    {icon:'✅',value:state.bookings.filter(b=>b.status==='completed').length,label:'Completed'},
+    {icon:'✉️',value:state.messages.filter(m=>!m.read).length,label:'Unread Messages'},
+  ];
+  document.getElementById('admin-stats').innerHTML = stats.map(s=>`
+    <div class="stat-card">
+      <span class="stat-icon">${s.icon}</span>
+      <span class="stat-value">${s.value}</span>
+      <div class="stat-label">${s.label}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('recent-bookings').innerHTML = state.bookings.slice(0,5).map(b=>`
+    <tr><td>${b.name}</td><td>${b.service}</td><td>${statusTag(b.status)}</td></tr>
+  `).join('') || '<tr><td colspan="3" style="color:var(--text2);text-align:center;padding:24px">No bookings yet</td></tr>';
+
+  document.getElementById('recent-messages').innerHTML = state.messages.slice(0,5).map(m=>`
+    <tr><td>${m.name}</td><td>${m.subject}</td><td>${m.read?'<span class="tag tag-gray">Read</span>':'<span class="tag tag-gold">Unread</span>'}</td></tr>
+  `).join('') || '<tr><td colspan="3" style="color:var(--text2);text-align:center;padding:24px">No messages yet</td></tr>';
+}
+
+// ─── Portfolio Admin ───
+
+function renderAdminPortfolio(){
+  const grid = document.getElementById('admin-portfolio-grid');
+  grid.innerHTML = state.portfolioItems.map(item=>`
+    <div class="media-item">
+      <img src="${item.img}" alt="${item.title}">
+      <div class="mi-actions">
+        <button class="btn btn-ghost btn-sm" onclick="editPortfolioItem(${item.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deletePortfolioItem(${item.id})">🗑️</button>
+      </div>
+    </div>
+  `).join('') || '<p style="color:var(--text2);padding:24px">No items yet.</p>';
+}
+
+function openPortfolioModal(id){
+  const m = document.getElementById('portfolio-modal');
+  if(id){
+    const item = state.portfolioItems.find(i=>i.id===id);
+    document.getElementById('pm-title').textContent='Edit Portfolio Item';
+    document.getElementById('pm-id').value=id;
+    document.getElementById('pm-item-title').value=item.title;
+    document.getElementById('pm-cat').value=item.category;
+    document.getElementById('pm-type').value=item.type;
+    document.getElementById('pm-client').value=item.client||'';
+    document.getElementById('pm-img').value=item.img||'';
+    document.getElementById('pm-desc').value=item.desc||'';
+  } else {
+    document.getElementById('pm-title').textContent='Add Portfolio Item';
+    document.getElementById('pm-id').value='';
+    document.getElementById('pm-item-title').value='';
+    document.getElementById('pm-client').value='';
+    document.getElementById('pm-img').value='';
+    document.getElementById('pm-desc').value='';
+  }
+  m.classList.remove('hidden');
+}
+
+function editPortfolioItem(id){ openPortfolioModal(id); }
+
+function savePortfolioItem(){
+  const id = document.getElementById('pm-id').value;
+  const data = {
+    title: document.getElementById('pm-item-title').value,
+    category: document.getElementById('pm-cat').value,
+    type: document.getElementById('pm-type').value,
+    client: document.getElementById('pm-client').value,
+    img: document.getElementById('pm-img').value || `https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop`,
+    desc: document.getElementById('pm-desc').value,
+  };
+  if(id){
+    const idx = state.portfolioItems.findIndex(i=>i.id==id);
+    state.portfolioItems[idx] = {...state.portfolioItems[idx],...data};
+  } else {
+    state.portfolioItems.unshift({id:Date.now(),...data});
+  }
+  saveData(); closeModal('portfolio-modal'); renderAdminPortfolio(); renderDashboard();
+  showToast('Portfolio item saved!','success');
+}
+
+function deletePortfolioItem(id){
+  if(!confirm('Delete this portfolio item?')) return;
+  state.portfolioItems = state.portfolioItems.filter(i=>i.id!==id);
+  saveData(); renderAdminPortfolio(); renderDashboard();
+  showToast('Item deleted','success');
+}
+
+// ─── Services Admin ───
+
+function renderAdminServices(){
+  const tbody = document.getElementById('services-table');
+  tbody.innerHTML = state.services.map(s=>`
+    <tr>
+      <td><span style="margin-right:8px">${s.icon}</span>${s.title}</td>
+      <td style="color:var(--gold)">${s.price}</td>
+      <td><span class="tag tag-green">Active</span></td>
+      <td class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="editService(${s.id})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteService(${s.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" style="color:var(--text2);text-align:center;padding:24px">No services yet</td></tr>';
+}
+
+function openServiceModal(id){
+  if(id){
+    const s = state.services.find(i=>i.id===id);
+    document.getElementById('sm-title').textContent='Edit Service';
+    document.getElementById('sm-id').value=id;
+    document.getElementById('sm-name').value=s.title;
+    document.getElementById('sm-icon').value=s.icon||'📷';
+    document.getElementById('sm-price').value=s.price||'';
+    document.getElementById('sm-delivery').value=s.delivery||'';
+    document.getElementById('sm-short').value=s.shortDesc||'';
+    document.getElementById('sm-full').value=s.fullDesc||'';
+    document.getElementById('sm-features').value=(s.features||[]).join(', ');
+  } else {
+    document.getElementById('sm-title').textContent='Add Service';
+    document.getElementById('sm-id').value='';
+    ['sm-name','sm-price','sm-delivery','sm-short','sm-full','sm-features'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('sm-icon').value='📷';
+  }
+  document.getElementById('service-modal').classList.remove('hidden');
+}
+
+function editService(id){ openServiceModal(id); }
+
+function saveService(){
+  const id = document.getElementById('sm-id').value;
+  const data = {
+    title:document.getElementById('sm-name').value,
+    icon:document.getElementById('sm-icon').value,
+    price:document.getElementById('sm-price').value,
+    delivery:document.getElementById('sm-delivery').value,
+    shortDesc:document.getElementById('sm-short').value,
+    fullDesc:document.getElementById('sm-full').value,
+    features:document.getElementById('sm-features').value.split(',').map(f=>f.trim()).filter(Boolean),
+  };
+  if(id){
+    const idx = state.services.findIndex(s=>s.id==id);
+    state.services[idx]={...state.services[idx],...data};
+  } else {
+    state.services.push({id:Date.now(),...data});
+  }
+  saveData(); closeModal('service-modal'); renderAdminServices();
+  showToast('Service saved!','success');
+}
+
+function deleteService(id){
+  if(!confirm('Delete this service?')) return;
+  state.services = state.services.filter(s=>s.id!==id);
+  saveData(); renderAdminServices();
+  showToast('Service deleted','success');
+}
+
+// ─── Bookings Admin ───
+
+function renderAdminBookings(filter=''){
+  let items = state.bookings;
+  if(filter) items = items.filter(b=>b.name.toLowerCase().includes(filter)||b.service.toLowerCase().includes(filter));
+  const tbody = document.getElementById('bookings-table');
+  tbody.innerHTML = items.map(b=>`
+    <tr>
+      <td><strong>${b.name}</strong><br><span style="font-size:12px;color:var(--text2)">${b.email}</span></td>
+      <td>${b.service}</td>
+      <td>${b.date||'—'}</td>
+      <td>${b.budget||'—'}</td>
+      <td>${statusTag(b.status)}</td>
+      <td class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="viewBooking(${b.id})">View</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" style="color:var(--text2);text-align:center;padding:24px">No bookings yet</td></tr>';
+}
+
+function filterBookings(v){ renderAdminBookings(v.toLowerCase()); }
+
+function viewBooking(id){
+  state.currentBookingId = id;
+  const b = state.bookings.find(b=>b.id===id);
+  const content = document.getElementById('booking-detail-content');
+  content.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div><div class="ci-lbl">Client</div><div style="font-size:15px">${b.name}</div></div>
+      <div><div class="ci-lbl">Email</div><div style="font-size:15px">${b.email}</div></div>
+      <div><div class="ci-lbl">Phone</div><div style="font-size:15px">${b.phone||'—'}</div></div>
+      <div><div class="ci-lbl">Service</div><div style="font-size:15px">${b.service}</div></div>
+      <div><div class="ci-lbl">Event Date</div><div style="font-size:15px">${b.date||'—'}</div></div>
+      <div><div class="ci-lbl">Location</div><div style="font-size:15px">${b.location||'—'}</div></div>
+      <div><div class="ci-lbl">Budget</div><div style="font-size:15px">${b.budget||'—'}</div></div>
+      <div><div class="ci-lbl">Style</div><div style="font-size:15px">${b.style||'—'}</div></div>
+    </div>
+    <div><div class="ci-lbl" style="margin-bottom:8px">Project Details</div><div style="font-size:14px;color:var(--text2);line-height:1.7;background:var(--bg3);padding:16px;border-radius:6px">${b.details}</div></div>
+    <div style="margin-top:12px"><div class="ci-lbl" style="margin-bottom:4px">Submitted</div><div style="font-size:13px;color:var(--text2)">${new Date(b.created).toLocaleString()}</div></div>
+  `;
+  document.getElementById('booking-status-select').value = b.status;
+  document.getElementById('booking-notes').value = b.notes||'';
+  document.getElementById('booking-modal').classList.remove('hidden');
+}
+
+function updateBookingStatus(){
+  const b = state.bookings.find(b=>b.id===state.currentBookingId);
+  b.status = document.getElementById('booking-status-select').value;
+  b.notes = document.getElementById('booking-notes').value;
+  saveData(); closeModal('booking-modal'); renderAdminBookings(); updateBadges(); renderDashboard();
+  showToast('Booking updated!','success');
+}
+
+function deleteBooking(){
+  if(!confirm('Delete this booking?')) return;
+  state.bookings = state.bookings.filter(b=>b.id!==state.currentBookingId);
+  saveData(); closeModal('booking-modal'); renderAdminBookings(); updateBadges(); renderDashboard();
+  showToast('Booking deleted','success');
+}
+
+// ─── Messages Admin ───
+
+function renderAdminMessages(filter=''){
+  let items = state.messages;
+  if(filter) items = items.filter(m=>m.name.toLowerCase().includes(filter)||m.subject?.toLowerCase().includes(filter));
+  const tbody = document.getElementById('messages-table');
+  tbody.innerHTML = items.map(m=>`
+    <tr style="${!m.read?'background:#c8a96e08':''}" >
+      <td><strong>${m.name}</strong></td>
+      <td>${m.email}</td>
+      <td>${m.subject||'—'}</td>
+      <td>${m.read?'<span class="tag tag-gray">Read</span>':'<span class="tag tag-gold">Unread</span>'}</td>
+      <td class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="viewMessage(${m.id})">View</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="5" style="color:var(--text2);text-align:center;padding:24px">No messages yet</td></tr>';
+}
+
+function filterMessages(v){ renderAdminMessages(v.toLowerCase()); }
+
+function viewMessage(id){
+  state.currentMessageId = id;
+  const m = state.messages.find(m=>m.id===id);
+  if(!m.read){ m.read=true; saveData(); updateBadges(); renderAdminMessages(); }
+  document.getElementById('message-detail-content').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div><div class="ci-lbl">From</div><div style="font-size:15px">${m.name}</div></div>
+      <div><div class="ci-lbl">Email</div><div style="font-size:15px">${m.email}</div></div>
+      <div><div class="ci-lbl">Phone</div><div style="font-size:15px">${m.phone||'—'}</div></div>
+      <div><div class="ci-lbl">Subject</div><div style="font-size:15px">${m.subject||'—'}</div></div>
+    </div>
+    <div><div class="ci-lbl" style="margin-bottom:8px">Message</div><div style="font-size:14px;color:var(--text2);line-height:1.7;background:var(--bg3);padding:16px;border-radius:6px">${m.msg}</div></div>
+    <div style="margin-top:12px"><div class="ci-lbl" style="margin-bottom:4px">Received</div><div style="font-size:13px;color:var(--text2)">${new Date(m.created).toLocaleString()}</div></div>
+  `;
+  document.getElementById('message-modal').classList.remove('hidden');
+}
+
+function markMessageRead(){
+  const m = state.messages.find(m=>m.id===state.currentMessageId);
+  m.read = true; saveData(); closeModal('message-modal'); renderAdminMessages(); updateBadges();
+  showToast('Marked as read','success');
+}
+
+function deleteMessage(){
+  if(!confirm('Delete this message?')) return;
+  state.messages = state.messages.filter(m=>m.id!==state.currentMessageId);
+  saveData(); closeModal('message-modal'); renderAdminMessages(); updateBadges(); renderDashboard();
+  showToast('Message deleted','success');
+}
+
+// ─── Testimonials Admin ───
+
+function renderAdminTestimonials(){
+  const tbody = document.getElementById('testimonials-table');
+  tbody.innerHTML = state.testimonials.map(t=>`
+    <tr>
+      <td><strong>${t.name}</strong><br><span style="font-size:12px;color:var(--text2)">${t.role}</span></td>
+      <td style="max-width:300px;color:var(--text2);font-size:13px">${t.text.substring(0,100)}...</td>
+      <td>
+        <button class="btn btn-sm ${t.active?'btn-gold':'btn-ghost'}" onclick="toggleTestimonial(${t.id})">${t.active?'Active':'Inactive'}</button>
+      </td>
+      <td class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="editTestimonial(${t.id})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteTestimonial(${t.id})">Delete</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" style="color:var(--text2);text-align:center;padding:24px">No testimonials yet</td></tr>';
+}
+
+function openTestimonialModal(id){
+  if(id){
+    const t = state.testimonials.find(t=>t.id===id);
+    document.getElementById('tm-title').textContent='Edit Testimonial';
+    document.getElementById('tm-id').value=id;
+    document.getElementById('tm-name').value=t.name;
+    document.getElementById('tm-role').value=t.role;
+    document.getElementById('tm-text').value=t.text;
+  } else {
+    document.getElementById('tm-title').textContent='Add Testimonial';
+    document.getElementById('tm-id').value='';
+    ['tm-name','tm-role','tm-text'].forEach(i=>document.getElementById(i).value='');
+  }
+  document.getElementById('testi-modal').classList.remove('hidden');
+}
+
+function editTestimonial(id){ openTestimonialModal(id); }
+
+function saveTestimonial(){
+  const id = document.getElementById('tm-id').value;
+  const data = {
+    name:document.getElementById('tm-name').value,
+    role:document.getElementById('tm-role').value,
+    text:document.getElementById('tm-text').value,
+  };
+  if(id){
+    const idx = state.testimonials.findIndex(t=>t.id==id);
+    state.testimonials[idx]={...state.testimonials[idx],...data};
+  } else {
+    state.testimonials.push({id:Date.now(),...data,active:true});
+  }
+  saveData(); closeModal('testi-modal'); renderAdminTestimonials();
+  showToast('Testimonial saved!','success');
+}
+
+function toggleTestimonial(id){
+  const t = state.testimonials.find(t=>t.id===id);
+  t.active=!t.active; saveData(); renderAdminTestimonials();
+}
+
+function deleteTestimonial(id){
+  if(!confirm('Delete this testimonial?')) return;
+  state.testimonials=state.testimonials.filter(t=>t.id!==id);
+  saveData(); renderAdminTestimonials();
+  showToast('Testimonial deleted','success');
+}
+
+function saveSettings(){
+  showToast('Settings saved!','success');
+}
+
+// ═══════════════════════ HELPERS ═══════════════════════
+
+function statusTag(s){
+  const map={new:'tag-gold',contacted:'tag-blue',quote_sent:'tag-blue',confirmed:'tag-green',in_progress:'tag-green',completed:'tag-green',canceled:'tag-red'};
+  const labels={new:'New',contacted:'Contacted',quote_sent:'Quote Sent',confirmed:'Confirmed',in_progress:'In Progress',completed:'Completed',canceled:'Canceled'};
+  return `<span class="tag ${map[s]||'tag-gray'}">${labels[s]||s}</span>`;
+}
+
+function openLightbox(src){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.add('hidden');
+  document.body.style.overflow='';
+}
+
+function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
+function closeModalOverlay(e,id){ if(e.target===e.currentTarget) closeModal(id); }
+
+function showToast(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast'+(type?' '+type:'');
+  setTimeout(()=>t.classList.add('hidden'), 3500);
+}
+
+// ═══════════════════════ INIT ═══════════════════════
+
+initData();
+showPage('home');
+updateBadges();
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeLightbox();
+    document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.add('hidden'));
+  }
+});
+</script>
+</body>
+</html>
