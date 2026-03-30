@@ -9,16 +9,16 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080808;
-  --bg2:#111111;
-  --bg3:#1a1a1a;
-  --gold:#c8a96e;
-  --gold2:#e8c98e;
-  --text:#f0ece4;
-  --text2:#9a9590;
-  --text3:#5a5550;
-  --border:#222;
-  --border2:#333;
+  --bg:#041F32;
+  --bg2:#052C47;
+  --bg3:#0B3A5B;
+  --gold:#EB6624;
+  --gold2:#FF8A4C;
+  --text:#F5F5F5;
+  --text2:#C9D5DE;
+  --text3:#8EA6B8;
+  --border:#0F3F5D;
+  --border2:#1A5273;
   --radius:4px;
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Outfit',sans-serif;
@@ -38,8 +38,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .container{max-width:1280px;margin:0 auto;padding:0 32px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:none;border-radius:var(--radius);cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:all .3s var(--trans);text-decoration:none}
-.btn-gold{background:var(--gold);color:var(--bg);box-shadow:0 0 24px #c8a96e33}
-.btn-gold:hover{background:var(--gold2);box-shadow:0 0 36px #c8a96e55;transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:var(--bg);box-shadow:0 0 24px #EB662433}
+.btn-gold:hover{background:var(--gold2);box-shadow:0 0 36px #EB662455;transform:translateY(-2px)}
 .btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold)}
 .btn-outline:hover{background:var(--gold);color:var(--bg)}
 .btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
@@ -60,7 +60,7 @@ label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:600px){.form-row{grid-template-columns:1fr}}
 .tag{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-.tag-gold{background:#c8a96e22;color:var(--gold);border:1px solid #c8a96e44}
+.tag-gold{background:#EB662422;color:var(--gold);border:1px solid #EB662444}
 .tag-green{background:#27ae6022;color:#2ecc71;border:1px solid #27ae6044}
 .tag-blue{background:#2980b922;color:#3498db;border:1px solid #2980b944}
 .tag-red{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b44}
@@ -95,11 +95,11 @@ label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase
 
 /* ── HERO ── */
 .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#111 50%,#0a0505 100%)}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#041F32 0%,#052C47 50%,#0B3A5B 100%)}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.3}
 .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);animation:pulse 6s ease-in-out infinite}
-.hero-orb1{width:500px;height:500px;background:#c8a96e18;top:-100px;right:-100px}
-.hero-orb2{width:300px;height:300px;background:#8b5e1a18;bottom:10%;left:10%;animation-delay:3s}
+.hero-orb1{width:500px;height:500px;background:#EB662418;top:-100px;right:-100px}
+.hero-orb2{width:300px;height:300px;background:#EB662418;bottom:10%;left:10%;animation-delay:3s}
 .hero-content{position:relative;z-index:2;max-width:800px}
 .hero-label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px}
 .hero-label::before{content:'';width:40px;height:1px;background:var(--gold)}
@@ -143,7 +143,7 @@ label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase
 .service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:.4s var(--trans)}
 .service-card:hover::before{transform:scaleX(1)}
 .service-card:hover{border-color:var(--border2);transform:translateY(-4px)}
-.sc-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#c8a96e15;border-radius:8px;margin-bottom:24px;font-size:22px}
+.sc-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#EB662415;border-radius:8px;margin-bottom:24px;font-size:22px}
 .sc-title{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:12px;color:var(--text)}
 .sc-desc{font-size:13px;color:var(--text2);line-height:1.7}
 .sc-price{margin-top:20px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
@@ -163,7 +163,7 @@ label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase
 
 /* ── PORTFOLIO PAGE ── */
 .page-hero{padding:140px 0 80px;position:relative}
-.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,#c8a96e08 0%,transparent 70%)}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,#EB662408 0%,transparent 70%)}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px}
 .filter-btn{background:none;border:1px solid var(--border2);color:var(--text2);font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;border-radius:20px;cursor:pointer;transition:.2s}
 .filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
@@ -280,7 +280,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
 .admin-nav-section{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);padding:16px 12px 8px;font-weight:500}
 .admin-nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--text2);transition:.15s;width:100%;background:none;border:none;font-family:var(--sans);text-align:left}
 .admin-nav-item:hover{background:var(--bg3);color:var(--text)}
-.admin-nav-item.active{background:#c8a96e18;color:var(--gold)}
+.admin-nav-item.active{background:#EB662418;color:var(--gold)}
 .admin-nav-item .icon{font-size:16px;width:20px;text-align:center}
 .admin-nav-item .badge{margin-left:auto;background:#c0392b;color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500}
 .admin-footer{padding:16px 24px;border-top:1px solid var(--border)}
@@ -540,7 +540,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
           <h2>Let's create something beautiful together</h2>
           <p>Fill out the form and I'll get back to you within 24 hours to discuss your project, availability, and pricing.</p>
           <ul class="booking-contact-list">
-            <li class="bcl-item"><span class="bcl-icon">📧</span> hello@lumiere.studio</li>
+            <li class="bcl-item"><span class="bcl-icon">📧</span> info@msra.om</li>
             <li class="bcl-item"><span class="bcl-icon">📱</span> +1 (555) 000-0000</li>
             <li class="bcl-item"><span class="bcl-icon">💬</span> WhatsApp Available</li>
             <li class="bcl-item"><span class="bcl-icon">📍</span> Serving Worldwide</li>
@@ -646,7 +646,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
           <h3>Let's talk about your project</h3>
           <div class="contact-item">
             <div class="ci-icon">📧</div>
-            <div><div class="ci-lbl">Email</div><div class="ci-val">hello@lumiere.studio</div></div>
+            <div><div class="ci-lbl">Email</div><div class="ci-val">info@msra.om</div></div>
           </div>
           <div class="contact-item">
             <div class="ci-icon">📱</div>
@@ -695,11 +695,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
     <div class="login-logo"><span>MSRA</span></div>
     <div class="login-sub">Admin Dashboard — Secure Access</div>
     <form onsubmit="adminLogin(event)">
-      <div class="form-group"><label>Email</label><input id="login-email" type="email" value="admin@lumiere.studio" required></div>
+      <div class="form-group"><label>Email</label><input id="login-email" type="email" value="admin@msra.om" required></div>
       <div class="form-group"><label>Password</label><input id="login-pass" type="password" value="admin123" required></div>
       <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px">Sign In →</button>
     </form>
-    <p style="text-align:center;font-size:12px;color:var(--text2);margin-top:20px">Demo: admin@lumiere.studio / admin123</p>
+    <p style="text-align:center;font-size:12px;color:var(--text2);margin-top:20px">Demo: admin@msra.om / admin123</p>
     <button onclick="showPublicSite()" style="display:block;width:100%;text-align:center;margin-top:12px;background:none;border:none;color:var(--text2);font-size:12px;cursor:pointer;font-family:var(--sans)">← Back to Website</button>
   </div>
 </div>
@@ -833,11 +833,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
           <div class="card" style="padding:40px;border:1px solid var(--border2)">
             <h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:300;margin-bottom:28px">Site Settings</h3>
             <div class="form-row">
-              <div class="form-group"><label>Brand Name</label><input id="s-brand" value="LUMIÈRE"></div>
-              <div class="form-group"><label>Tagline</label><input id="s-tagline" value="Photography & Videography Studio"></div>
+              <div class="form-group"><label>Brand Name</label><input id="s-brand" value="MSRA"></div>
+              <div class="form-group"><label>Tagline</label><input id="s-tagline" value="Smart Tourism & Media Studio"></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Email</label><input id="s-email" value="hello@lumiere.studio"></div>
+              <div class="form-group"><label>Email</label><input id="s-email" value="info@msra.om"></div>
               <div class="form-group"><label>Phone</label><input id="s-phone" value="+1 (555) 000-0000"></div>
             </div>
             <div class="form-row">
@@ -1019,7 +1019,7 @@ function initData(){
 
   state.testimonials = [
     {id:1,name:'Sarah & James',role:'Wedding Clients',text:'Absolutely breathtaking work. Our wedding photos exceeded every expectation. We will treasure them forever. The attention to detail and genuine care for our story was evident in every frame.',active:true},
-    {id:2,name:'Alexandra Chen',role:'CEO, Luxe Brand Co.',text:'Working with LUMIÈRE was a transformative experience for our brand. The commercial campaign they delivered was cinematic, luxurious, and perfectly on-brand. We will absolutely work together again.',active:true},
+    {id:2,name:'Alexandra Chen',role:'CEO, Luxe Brand Co.',text:'Working with MSRA was a transformative experience for our brand. The commercial campaign they delivered was cinematic, luxurious, and perfectly on-brand. We will absolutely work together again.',active:true},
     {id:3,name:'Marco Rossi',role:'Creative Director',text:'The brand film captured everything we stand for in just two minutes. It is now the centerpiece of our entire marketing strategy. Truly exceptional storytelling and technical mastery.',active:true},
   ];
 
@@ -1265,7 +1265,7 @@ function adminLogin(e){
   e.preventDefault();
   const email = document.getElementById('login-email').value;
   const pass = document.getElementById('login-pass').value;
-  if(email==='admin@lumiere.studio' && pass==='admin123'){
+  if(email==='admin@msra.om' && pass==='admin123'){
     document.getElementById('admin-login').classList.add('hidden');
     document.getElementById('admin').classList.remove('hidden');
     showAdminPanel('dashboard');
@@ -1547,7 +1547,7 @@ function renderAdminMessages(filter=''){
   if(filter) items = items.filter(m=>m.name.toLowerCase().includes(filter)||m.subject?.toLowerCase().includes(filter));
   const tbody = document.getElementById('messages-table');
   tbody.innerHTML = items.map(m=>`
-    <tr style="${!m.read?'background:#c8a96e08':''}" >
+    <tr style="${!m.read?'background:#EB662408':''}" >
       <td><strong>${m.name}</strong></td>
       <td>${m.email}</td>
       <td>${m.subject||'—'}</td>
