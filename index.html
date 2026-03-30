@@ -6,6 +6,7 @@
 <title>MSRA — Photography & Videography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -30,6 +31,109 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg2)}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px}
+
+/* ── 3D / INTERACTIVE UI ── */
+@media (min-width: 901px){
+  body,.btn,.nav-link,.social-link,.portfolio-item,.service-card,.testi-card,.masonry-item,.flip-card,.tilt-item{cursor:none}
+}
+#cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s,width .3s,height .3s,opacity .3s;mix-blend-mode:difference;opacity:0}
+#cursor-ring{position:fixed;width:40px;height:40px;border-radius:50%;border:1px solid var(--gold);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s,width .3s,height .3s,opacity .3s;opacity:0}
+body:hover #cursor, body:hover #cursor-ring{opacity:1}
+#cursor.active{width:18px;height:18px}
+#cursor-ring.active{width:60px;height:60px;opacity:.65}
+#hero-canvas{position:absolute;inset:0;z-index:0}
+.hero-grain{position:absolute;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");opacity:.35;pointer-events:none}
+.hero-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 35%,rgba(4,31,50,.92) 100%)}
+.hero-depth-text{position:absolute;right:-2%;top:50%;transform:translateY(-50%) rotate(90deg);font-family:var(--serif);font-size:clamp(4rem,12vw,10rem);color:transparent;-webkit-text-stroke:1px rgba(245,245,245,.08);white-space:nowrap;pointer-events:none;z-index:1;letter-spacing:.2em}
+.hero{min-height:680px}
+.hero-content{position:relative;z-index:2;max-width:900px}
+.hero-label,.hero-title,.hero-sub,.hero-btns{opacity:0;animation:heroFadeUp .8s var(--trans) forwards}
+.hero-title{animation-delay:.15s}
+.hero-sub{animation-delay:.3s}
+.hero-btns{animation-delay:.45s}
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.hero-stats{display:none}
+.scroll-hint{bottom:26px;gap:10px}
+.scroll-line{height:60px;background:var(--border2);position:relative;overflow:hidden}
+.scroll-line::after{content:'';position:absolute;top:-60px;left:0;width:100%;height:60px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);animation:scrollTrack 2s ease-in-out infinite}
+@keyframes scrollTrack{to{top:60px}}
+.stats-3d{padding:100px 0;background:var(--bg);position:relative;overflow:hidden}
+.stats-3d::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(235,102,36,.12) 0%,transparent 70%)}
+.stats-grid-3d{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;perspective:600px}
+@media(max-width:800px){.stats-grid-3d{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.stats-grid-3d{grid-template-columns:1fr 1fr}}
+.stat-3d{background:rgba(5,44,71,.72);backdrop-filter:blur(10px);border:1px solid var(--border);padding:40px 32px;text-align:center;position:relative;transform-style:preserve-3d;transition:transform .5s var(--trans),box-shadow .5s;border-radius:8px}
+.stat-3d:hover{transform:translateY(-12px) rotateX(6deg) scale(1.04);box-shadow:0 40px 80px rgba(0,0,0,.35),0 0 40px rgba(235,102,36,.18)}
+.stat-3d::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.stat-3d-num{font-family:var(--serif);font-size:3.2rem;font-weight:300;color:var(--gold);text-shadow:0 0 36px rgba(235,102,36,.28);display:block;line-height:1}
+.stat-3d-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-top:12px}
+.services-3d{padding:120px 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.services-3d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:64px;perspective:1200px}
+.flip-card{height:360px;transform-style:preserve-3d;transition:transform .7s var(--trans),box-shadow .4s}
+.flip-card:hover{transform:rotateY(180deg);box-shadow:0 40px 80px rgba(0,0,0,.35),0 0 60px rgba(235,102,36,.14)}
+.flip-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px;padding:40px;display:flex;flex-direction:column}
+.flip-front{background:linear-gradient(180deg,rgba(11,58,91,.6),rgba(5,44,71,.85));border:1px solid var(--border2)}
+.flip-back{background:linear-gradient(135deg,#0b3a5b,#052C47);border:1px solid var(--gold);transform:rotateY(180deg);justify-content:center;align-items:flex-start}
+.flip-front-icon{font-size:40px;margin-bottom:24px}
+.flip-front-title{font-family:var(--serif);font-size:1.5rem;font-weight:300;margin-bottom:12px}
+.flip-front-desc{font-size:13px;color:var(--text2);line-height:1.8;flex:1}
+.flip-front-price{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.flip-back-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.flip-back h3{font-family:var(--serif);font-size:1.8rem;font-weight:300;margin-bottom:16px;line-height:1.2}
+.flip-back-features{list-style:none;margin-bottom:28px;width:100%}
+.flip-back-features li{font-size:13px;color:var(--text2);padding:6px 0;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.flip-back-features li::before{content:'◆';color:var(--gold);font-size:6px;flex-shrink:0}
+.flip-back-delivery{font-size:11px;color:var(--text2);margin-bottom:24px;letter-spacing:.05em}
+.flip-hint{position:absolute;bottom:16px;right:16px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text3)}
+.featured-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-top:72px}
+.pitem{position:relative;overflow:hidden;background:var(--bg3);transform-style:preserve-3d;border-radius:8px;min-height:260px}
+.pitem:nth-child(1){grid-column:1/8;aspect-ratio:16/9}
+.pitem:nth-child(2){grid-column:8/13;aspect-ratio:4/3}
+.pitem:nth-child(3){grid-column:1/5;aspect-ratio:4/3}
+.pitem:nth-child(4){grid-column:5/9;aspect-ratio:4/3}
+.pitem:nth-child(5){grid-column:9/13;aspect-ratio:4/3}
+@media(max-width:900px){.pitem{grid-column:1/-1!important;aspect-ratio:16/9!important}}
+.pitem img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--trans),filter .6s}
+.pitem:hover img{transform:scale(1.1);filter:brightness(.8)}
+.pitem-overlay{position:absolute;inset:0;background:linear-gradient(to top,#000e 0%,transparent 60%);opacity:0;transition:opacity .5s;display:flex;align-items:flex-end;padding:28px}
+.pitem:hover .pitem-overlay{opacity:1}
+.pitem-meta{transform:translateY(20px) translateZ(20px);transition:transform .5s var(--trans)}
+.pitem:hover .pitem-meta{transform:translateY(0) translateZ(20px)}
+.pitem-cat{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.pitem-title{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--text);text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.pitem-3d-frame{position:absolute;inset:0;pointer-events:none;border:1px solid transparent;transition:border-color .4s,box-shadow .4s;border-radius:8px}
+.pitem:hover .pitem-3d-frame{border-color:rgba(235,102,36,.35);box-shadow:inset 0 0 40px rgba(235,102,36,.08),0 0 40px rgba(235,102,36,.12)}
+.testi-3d{padding:120px 0;background:linear-gradient(to bottom,var(--bg2),var(--bg))}
+.testi-3d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:64px;perspective:800px}
+.testi-3d-card{background:rgba(5,44,71,.75);backdrop-filter:blur(10px);border:1px solid var(--border2);padding:40px;border-radius:8px;position:relative;transform-style:preserve-3d;transition:transform .5s var(--trans),box-shadow .5s}
+.testi-3d-card:hover{transform:translateY(-8px) rotateX(4deg) rotateY(-2deg);box-shadow:0 32px 64px rgba(0,0,0,.35),0 0 40px rgba(235,102,36,.14)}
+.testi-3d-card::before{content:'"';font-family:var(--serif);font-size:8rem;color:var(--gold);opacity:.15;position:absolute;top:8px;right:20px;line-height:1;transform:translateZ(20px)}
+.portfolio-masonry{columns:3;gap:6px}
+.tilt-item{break-inside:avoid;margin-bottom:6px;position:relative;overflow:hidden;background:var(--bg3);transform-style:preserve-3d;transition:transform .1s,box-shadow .4s;border-radius:8px}
+.tilt-item img{width:100%;display:block;transition:transform .6s var(--trans)}
+.tilt-item:hover img{transform:scale(1.05)}
+.tilt-overlay{position:absolute;inset:0;background:linear-gradient(to top,#000c,transparent 60%);opacity:0;transition:.4s;display:flex;align-items:flex-end;padding:20px}
+.tilt-item:hover .tilt-overlay{opacity:1}
+.tilt-meta{transform:translateY(12px);transition:.4s}
+.tilt-item:hover .tilt-meta{transform:none}
+.tilt-cat{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.tilt-title{font-family:var(--serif);font-size:1.1rem;font-weight:300;color:var(--text)}
+@media(max-width:900px){.portfolio-masonry{columns:2}}
+@media(max-width:560px){.portfolio-masonry{columns:1}}
+.page-hero-3d{padding:140px 0 80px;position:relative;overflow:hidden}
+.page-hero-3d::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(235,102,36,.10) 0%,transparent 70%)}
+.about-3d{padding:140px 0 80px}
+.about-3d-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;margin-top:48px}
+@media(max-width:900px){.about-3d-grid{grid-template-columns:1fr;gap:48px}}
+.about-3d-scene{perspective:800px}
+.about-3d-card{position:relative;transform-style:preserve-3d;transform:rotateY(-8deg) rotateX(4deg);transition:transform .6s var(--trans)}
+.about-3d-scene:hover .about-3d-card{transform:rotateY(0) rotateX(0)}
+.about-float-badge{position:absolute;bottom:-24px;right:-24px;background:linear-gradient(135deg,var(--gold),#c9551e);color:var(--bg);padding:24px;text-align:center;border-radius:8px;transform:translateZ(40px);box-shadow:0 20px 40px rgba(235,102,36,.25)}
+.afb-num{font-family:var(--serif);font-size:2.5rem;font-weight:300;display:block;line-height:1}
+.afb-txt{font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
+.nav-logo,.logo,.login-logo{text-shadow:0 0 28px rgba(235,102,36,.16)}
+
 
 /* ── UTILS ── */
 .hidden{display:none!important}
@@ -337,6 +441,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
 </style>
 </head>
 <body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
 <!-- ═══════════════════════════════ PUBLIC SITE ═══════════════════════════════ -->
 
@@ -361,15 +467,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
 <!-- HOME PAGE -->
 <div id="page-home" class="page active">
 
-  <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-orb hero-orb1"></div>
-    <div class="hero-orb hero-orb2"></div>
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-grain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-depth-text">MSRA</div>
     <div class="container">
       <div class="hero-content">
-        <div class="hero-label">Visual Storytelling Studio</div>
+        <div class="hero-label">Visual Storytelling Studio · MSRA</div>
         <h1 class="hero-title">Capturing <em>Stories</em><br>Through Timeless<br>Photography</h1>
         <p class="hero-sub">Every frame tells a story. Every moment deserves to be remembered with intention, emotion, and cinematic grace.</p>
         <div class="hero-btns">
@@ -378,50 +483,52 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
         </div>
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item"><span class="stat-num">320+</span><span class="stat-lbl">Projects</span></div>
-      <div class="stat-item"><span class="stat-num">8</span><span class="stat-lbl">Years</span></div>
-      <div class="stat-item"><span class="stat-num">98%</span><span class="stat-lbl">Satisfied</span></div>
-    </div>
     <div class="scroll-hint">
       <div class="scroll-line"></div>
       Scroll
     </div>
   </section>
 
-  <!-- FEATURED PORTFOLIO -->
   <section class="featured">
     <div class="container">
-      <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:0">
         <div>
           <div class="section-label">Selected Work</div>
           <h2 class="section-title">Portfolio <em>Highlights</em></h2>
         </div>
-        <button class="btn btn-outline" onclick="showPage('portfolio')">View All Work →</button>
+        <button class="btn btn-outline" onclick="showPage('portfolio')">View All →</button>
       </div>
       <div class="featured-grid" id="featured-grid"></div>
     </div>
   </section>
 
-  <!-- SERVICES PREVIEW -->
-  <section class="services-section">
+  <section class="stats-3d">
     <div class="container">
-      <div class="section-label">What I Offer</div>
-      <h2 class="section-title">Creative <em>Services</em></h2>
-      <div class="services-grid" id="services-preview"></div>
+      <div class="stats-grid-3d">
+        <div class="stat-3d"><span class="stat-3d-num">320+</span><div class="stat-3d-label">Projects Delivered</div></div>
+        <div class="stat-3d"><span class="stat-3d-num">8</span><div class="stat-3d-label">Years Experience</div></div>
+        <div class="stat-3d"><span class="stat-3d-num">98%</span><div class="stat-3d-label">Client Satisfaction</div></div>
+        <div class="stat-3d"><span class="stat-3d-num">40+</span><div class="stat-3d-label">Creative Concepts</div></div>
+      </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="testimonials">
+  <section class="services-3d">
+    <div class="container">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Creative <em>Services</em></h2>
+      <div class="services-3d-grid" id="services-preview"></div>
+    </div>
+  </section>
+
+  <section class="testi-3d">
     <div class="container">
       <div class="section-label">Client Words</div>
       <h2 class="section-title">What They <em>Say</em></h2>
-      <div class="testi-slider" id="testimonials-list"></div>
+      <div class="testi-3d-grid" id="testimonials-list"></div>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-section">
     <div class="container">
       <div class="section-label">Ready to Begin?</div>
@@ -485,7 +592,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
 
 <!-- PORTFOLIO PAGE -->
 <div id="page-portfolio" class="page">
-  <div class="page-hero">
+  <div class="page-hero page-hero-3d">
     <div class="container">
       <div class="section-label">Creative Work</div>
       <h1 class="section-title">Our <em>Portfolio</em></h1>
@@ -494,7 +601,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
   </div>
   <div class="container" style="padding-bottom:80px">
     <div class="filter-bar" id="portfolio-filters"></div>
-    <div class="masonry" id="portfolio-grid"></div>
+    <div class="portfolio-masonry" id="portfolio-grid"></div>
     <div id="videos-section" style="margin-top:48px">
       <h2 class="section-title" style="margin-bottom:32px">Video <em>Showreel</em></h2>
       <div class="videos-grid" id="videos-grid"></div>
@@ -598,18 +705,20 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
 
 <!-- ABOUT PAGE -->
 <div id="page-about" class="page">
-  <div class="about-page">
+  <div class="about-page about-3d">
     <div class="container">
       <div class="section-label">The Storyteller</div>
-      <div class="about-grid">
-        <div class="about-img">
+      <div class="about-grid about-3d-grid">
+        <div class="about-img about-3d-scene">
+          <div class="about-3d-card">
           <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop" alt="Photographer">
-          <div class="about-img-badge">
-            <span class="abi-num">8+</span>
-            <span class="abi-txt">Years of Experience</span>
+          <div class="about-img-badge about-float-badge">
+            <span class="abi-num afb-num">8+</span>
+            <span class="abi-txt afb-txt">Years of Experience</span>
           </div>
         </div>
-        <div class="about-text">
+        </div>
+        <div class="about-text about-3d-text">
           <div class="section-label">About MSRA</div>
           <h2>Crafting <em style="color:var(--gold);font-style:italic">Visual</em><br>Narratives</h2>
           <div class="divider"></div>
@@ -1087,21 +1196,24 @@ function renderHome(){
   renderFeaturedGrid();
   renderServicesPreview();
   renderTestimonials();
+  initHero3D();
+  initTiltCollections();
 }
 
 function renderFeaturedGrid(){
   const grid = document.getElementById('featured-grid');
   const items = state.portfolioItems.slice(0,5);
-  grid.innerHTML = items.map((item,i)=>`
-    <div class="portfolio-item${i===0?' item-wide':''}" onclick="openLightbox('${item.img}')">
+  grid.innerHTML = items.map((item)=>`
+    <div class="pitem" onclick="openLightbox('${item.img}')">
       <img src="${item.img}" alt="${item.title}" loading="lazy">
-      <div class="overlay">
-        <div class="pi-meta">
-          <div class="pi-cat">${item.category}</div>
-          <div class="pi-title">${item.title}</div>
+      <div class="pitem-overlay">
+        <div class="pitem-meta">
+          <div class="pitem-cat">${item.category}</div>
+          <div class="pitem-title">${item.title}</div>
         </div>
         ${item.type==='video'?'<div class="pi-play">▶</div>':''}
       </div>
+      <div class="pitem-3d-frame"></div>
     </div>
   `).join('');
 }
@@ -1110,11 +1222,23 @@ function renderServicesPreview(){
   const icons = ['💍','🎭','🎉','🎬','📦','📱'];
   const preview = document.getElementById('services-preview');
   preview.innerHTML = state.services.slice(0,6).map((s,i)=>`
-    <div class="service-card" onclick="showPage('services')">
-      <div class="sc-icon">${s.icon||icons[i%icons.length]}</div>
-      <div class="sc-title">${s.title}</div>
-      <div class="sc-desc">${s.shortDesc}</div>
-      <div class="sc-price">${s.price}</div>
+    <div class="flip-card" onclick="showPage('services')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="flip-front-icon">${s.icon||icons[i%icons.length]}</div>
+          <div class="flip-front-title">${s.title}</div>
+          <div class="flip-front-desc">${s.shortDesc}</div>
+          <div class="flip-front-price">${s.price}</div>
+          <div class="flip-hint">Hover</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-back-label">MSRA SERVICE</div>
+          <h3>${s.title}</h3>
+          <ul class="flip-back-features">${(s.features||[]).slice(0,4).map(f=>`<li>${f}</li>`).join('')}</ul>
+          <div class="flip-back-delivery">⏱ Delivery: ${s.delivery}</div>
+          <button class="btn btn-gold btn-sm" type="button">Book This Service</button>
+        </div>
+      </div>
     </div>
   `).join('');
 }
@@ -1123,7 +1247,7 @@ function renderTestimonials(){
   const list = document.getElementById('testimonials-list');
   const active = state.testimonials.filter(t=>t.active);
   list.innerHTML = active.map(t=>`
-    <div class="testi-card">
+    <div class="testi-3d-card">
       <p class="testi-text">${t.text}</p>
       <div class="testi-author">${t.name}</div>
       <div class="testi-role">${t.role}</div>
@@ -1152,16 +1276,17 @@ function renderMasonry(){
   const grid = document.getElementById('portfolio-grid');
   const filtered = state.portfolioItems.filter(i=>i.type==='photo'&&(state.filterActive==='all'||i.category===state.filterActive));
   grid.innerHTML = filtered.map(item=>`
-    <div class="masonry-item" onclick="openLightbox('${item.img}')">
+    <div class="tilt-item" onclick="openLightbox('${item.img}')">
       <img src="${item.img}" alt="${item.title}" loading="lazy">
-      <div class="overlay">
-        <div style="text-align:center">
-          <div style="font-size:24px;color:var(--gold);margin-bottom:8px">🔍</div>
-          <div style="font-family:var(--serif);font-size:1.1rem">${item.title}</div>
+      <div class="tilt-overlay">
+        <div class="tilt-meta">
+          <div class="tilt-cat">${item.category}</div>
+          <div class="tilt-title">${item.title}</div>
         </div>
       </div>
     </div>
   `).join('');
+  initTiltCollections();
 }
 
 function renderVideosGrid(){
@@ -1690,9 +1815,141 @@ function showToast(msg, type=''){
   setTimeout(()=>t.classList.add('hidden'), 3500);
 }
 
+
+
+// ═══════════════════════ 3D UI HELPERS ═══════════════════════
+let heroRenderer = null, heroScene = null, heroCamera = null, heroAnimId = null;
+function initHero3D(){
+  const canvas = document.getElementById('hero-canvas');
+  if(!canvas || typeof THREE==='undefined') return;
+  if(heroRenderer){
+    cancelAnimationFrame(heroAnimId);
+    heroRenderer.dispose?.();
+    heroRenderer = null;
+  }
+  const hero = canvas.parentElement;
+  const W = hero.offsetWidth || window.innerWidth;
+  const H = hero.offsetHeight || 680;
+  heroScene = new THREE.Scene();
+  heroCamera = new THREE.PerspectiveCamera(55, W/H, .1, 1000);
+  heroCamera.position.set(0,0,8);
+  heroRenderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+  heroRenderer.setSize(W,H,false);
+
+  const group = new THREE.Group();
+  heroScene.add(group);
+  const orange = new THREE.Color('#EB6624');
+  const navy = new THREE.Color('#0B3A5B');
+  const geos = [
+    new THREE.TorusKnotGeometry(1.2,.22,140,18),
+    new THREE.OctahedronGeometry(.85,0),
+    new THREE.IcosahedronGeometry(.65,0),
+    new THREE.TorusGeometry(.9,.16,20,80),
+  ];
+  geos.forEach((geo, i)=>{
+    const mat = new THREE.MeshStandardMaterial({
+      color: i % 2 === 0 ? orange : navy,
+      emissive: i % 2 === 0 ? orange.clone().multiplyScalar(.22) : orange.clone().multiplyScalar(.1),
+      metalness:.35,
+      roughness:.35,
+      transparent:true,
+      opacity:.9,
+      wireframe: i===1
+    });
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set((i-1.5)*1.8, (i%2===0?1:-1)*.7, -i*.5);
+    m.userData = {rx:(Math.random()-.5)*.01, ry:(Math.random()-.5)*.014};
+    group.add(m);
+  });
+
+  const ambient = new THREE.AmbientLight('#ffffff', .8); heroScene.add(ambient);
+  const key = new THREE.PointLight('#EB6624', 2.4, 40); key.position.set(3,3,6); heroScene.add(key);
+  const fill = new THREE.PointLight('#ffffff', .9, 40); fill.position.set(-4,-2,5); heroScene.add(fill);
+
+  const particles = new THREE.BufferGeometry();
+  const count = 220;
+  const pos = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    pos[i*3]=(Math.random()-.5)*18;
+    pos[i*3+1]=(Math.random()-.5)*10;
+    pos[i*3+2]=(Math.random()-.5)*12;
+  }
+  particles.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const pMat = new THREE.PointsMaterial({color:'#EB6624', size:.03, transparent:true, opacity:.45});
+  heroScene.add(new THREE.Points(particles,pMat));
+
+  let mouseX=0, mouseY=0;
+  const move = (e)=>{
+    mouseX = (e.clientX / window.innerWidth - .5) * 2;
+    mouseY = -(e.clientY / window.innerHeight - .5) * 2;
+  };
+  window.addEventListener('mousemove', move, {passive:true});
+
+  let t = 0;
+  const animate = ()=>{
+    heroAnimId = requestAnimationFrame(animate); t += .008;
+    group.children.forEach((m, idx)=>{
+      m.rotation.x += m.userData.rx;
+      m.rotation.y += m.userData.ry;
+      m.position.y += Math.sin(t + idx) * .0025;
+    });
+    group.rotation.y += 0.0015;
+    heroCamera.position.x += (mouseX*.45 - heroCamera.position.x) * .03;
+    heroCamera.position.y += (mouseY*.25 - heroCamera.position.y) * .03;
+    heroCamera.lookAt(heroScene.position);
+    heroRenderer.render(heroScene, heroCamera);
+  };
+  animate();
+
+  const onResize = ()=>{
+    const w = hero.offsetWidth || window.innerWidth;
+    const h = hero.offsetHeight || 680;
+    heroCamera.aspect = w/h;
+    heroCamera.updateProjectionMatrix();
+    heroRenderer.setSize(w,h,false);
+  };
+  window.addEventListener('resize', onResize);
+}
+
+function initTilt(el){
+  if(!el || el.dataset.tiltBound==='1') return;
+  el.dataset.tiltBound='1';
+  el.addEventListener('mousemove', e=>{
+    if(window.innerWidth < 901) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - .5;
+    const y = (e.clientY - rect.top) / rect.height - .5;
+    el.style.transform = `perspective(900px) rotateY(${x*14}deg) rotateX(${-y*10}deg) translateY(-4px)`;
+    el.style.boxShadow = `${-x*20}px ${-y*16}px 40px rgba(0,0,0,.28), 0 0 28px rgba(235,102,36,.10)`;
+  });
+  el.addEventListener('mouseleave', ()=>{ el.style.transform=''; el.style.boxShadow=''; });
+}
+
+function initTiltCollections(){
+  document.querySelectorAll('.tilt-item,.pitem,.testi-3d-card,.stat-3d').forEach(initTilt);
+}
+
+function initCustomCursor(){
+  const c = document.getElementById('cursor');
+  const r = document.getElementById('cursor-ring');
+  if(!c || !r) return;
+  let rx = 0, ry = 0, x = 0, y = 0;
+  const move = e=>{ x = e.clientX; y = e.clientY; c.style.left = x+'px'; c.style.top = y+'px'; };
+  window.addEventListener('mousemove', move, {passive:true});
+  const loop = ()=>{ rx += (x-rx)*.18; ry += (y-ry)*.18; r.style.left = rx+'px'; r.style.top = ry+'px'; requestAnimationFrame(loop); };
+  loop();
+  document.addEventListener('mouseover', e=>{
+    const interactive = e.target.closest('button,a,input,textarea,select,.flip-card,.tilt-item,.pitem,.service-page-card,.video-card');
+    c.classList.toggle('active', !!interactive);
+    r.classList.toggle('active', !!interactive);
+  });
+}
+
 // ═══════════════════════ INIT ═══════════════════════
 
 initData();
+initCustomCursor();
 showPage('home');
 updateBadges();
 
