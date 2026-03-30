@@ -438,6 +438,66 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
   .admin-main{margin-left:0}
   .admin-content{padding:16px}
 }
+
+/* ===== MSRA responsive + hero fixes ===== */
+.hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:center;overflow:hidden;padding:110px 0 70px}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,31,50,.12) 0%,rgba(4,31,50,.04) 35%,rgba(4,31,50,.32) 100%);z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:3;max-width:760px}
+.hero-label{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;display:flex;align-items:center;gap:16px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;max-width:48px;height:1px;background:linear-gradient(to right,var(--gold),transparent)}
+.hero-eyebrow::after{background:linear-gradient(to left,var(--gold),transparent)}
+.hero-title{font-family:var(--serif);font-size:clamp(3.4rem,8.2vw,7rem);font-weight:300;line-height:1;margin-bottom:28px;color:var(--text)}
+.hero-title .line1,.hero-title .line2,.hero-title .line3{display:block}
+.hero-title .line2{color:var(--gold);font-style:italic;text-shadow:0 0 50px rgba(235,102,36,.22)}
+.hero-title .line3{font-size:.38em;font-style:normal;color:var(--text2);font-family:var(--sans);font-weight:300;letter-spacing:.1em;margin-top:14px;line-height:1.35;text-transform:uppercase}
+.hero-sub{max-width:560px;font-size:16px;line-height:1.85;color:var(--text2);margin-bottom:36px}
+.hero-vignette{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 28%,rgba(4,31,50,.58) 70%,rgba(4,31,50,.94) 100%)}
+.hero-depth-text{position:absolute;right:-2%;top:50%;transform:translateY(-50%) rotate(90deg);font-family:var(--serif);font-size:clamp(4rem,12vw,10rem);color:transparent;-webkit-text-stroke:1px rgba(245,245,245,.08);white-space:nowrap;pointer-events:none;z-index:1;letter-spacing:.2em}
+.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.55}
+.hero-scroll span{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--text2)}
+.scroll-track{width:1px;height:60px;background:var(--border2);position:relative;overflow:hidden}
+.scroll-track::after{content:'';position:absolute;top:-60px;left:0;width:100%;height:60px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);animation:scrollTrack 2s ease-in-out infinite}
+.scroll-hint{display:none}
+.featured-grid.count-3{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.92fr);grid-template-rows:repeat(2,minmax(220px,1fr));gap:12px;margin-top:56px;align-items:stretch}
+.featured-grid.count-3 .pitem:nth-child(1){grid-column:1;grid-row:1 / span 2;aspect-ratio:auto;min-height:520px}
+.featured-grid.count-3 .pitem:nth-child(2){grid-column:2;grid-row:1;aspect-ratio:auto;min-height:248px}
+.featured-grid.count-3 .pitem:nth-child(3){grid-column:2;grid-row:2;aspect-ratio:auto;min-height:248px}
+.featured-grid.count-3 .pitem img{object-position:center center}
+.featured-grid.count-3 .pitem:nth-child(2) img{object-position:center 38%}
+.featured-grid.count-3 .pitem:nth-child(3) img{object-position:center center}
+@media (hover:none), (pointer:coarse){
+  body,.btn,.nav-link,.social-link,.portfolio-item,.service-card,.testi-card,.masonry-item,.flip-card,.tilt-item,.pitem{cursor:auto!important}
+  #cursor,#cursor-ring{display:none!important}
+}
+@media(max-width:900px){
+  .hero{height:auto;min-height:100svh;padding:120px 0 64px}
+  .hero-content{max-width:100%}
+  .hero-title{font-size:clamp(2.8rem,12vw,4.6rem)}
+  .hero-sub{max-width:100%}
+  .hero-depth-text{right:auto;left:50%;top:auto;bottom:8%;transform:translateX(-50%);font-size:min(22vw,7rem);letter-spacing:.14em;-webkit-text-stroke:1px rgba(245,245,245,.06)}
+  .featured-grid.count-3{grid-template-columns:1fr;grid-template-rows:auto;gap:14px;margin-top:36px}
+  .featured-grid.count-3 .pitem:nth-child(1),
+  .featured-grid.count-3 .pitem:nth-child(2),
+  .featured-grid.count-3 .pitem:nth-child(3){grid-column:auto;grid-row:auto;min-height:0;aspect-ratio:16/10!important}
+  .services-3d-grid{grid-template-columns:1fr}
+  .flip-card{height:auto;min-height:0;transform:none!important;box-shadow:none!important}
+  .flip-card-inner{height:auto;display:flex;flex-direction:column;gap:12px}
+  .flip-front,.flip-back{position:relative;inset:auto;transform:none!important;backface-visibility:visible;-webkit-backface-visibility:visible;min-height:unset}
+  .flip-front{padding:28px}
+  .flip-back{padding:28px;margin-top:0}
+  .flip-hint{display:none}
+}
+@media(max-width:768px){
+  .nav-inner{height:72px}
+  .nav-links{top:72px;width:100%;padding:18px 20px 24px;gap:8px;background:rgba(4,31,50,.96);backdrop-filter:blur(18px)}
+  .nav-link,.nav-book{width:100%;justify-content:center}
+  .hero-label{font-size:9px;letter-spacing:.28em;gap:12px;justify-content:flex-start}
+  .hero-eyebrow::before,.hero-eyebrow::after{max-width:28px}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns .btn{width:100%;justify-content:center}
+  .container{padding:0 20px}
+}
+
 </style>
 </head>
 <body>
@@ -474,8 +534,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
     <div class="hero-depth-text">MSRA</div>
     <div class="container">
       <div class="hero-content">
-        <div class="hero-label">Visual Storytelling Studio · MSRA</div>
-        <h1 class="hero-title">Capturing <em>Stories</em><br>Through Timeless<br>Photography</h1>
+        <div class="hero-label hero-eyebrow">Visual Storytelling Studio</div>
+        <h1 class="hero-title">
+          <span class="line1">Capturing</span>
+          <span class="line2">Stories</span>
+          <span class="line3">Through Timeless Photography</span>
+        </h1>
         <p class="hero-sub">Every frame tells a story. Every moment deserves to be remembered with intention, emotion, and cinematic grace.</p>
         <div class="hero-btns">
           <button class="btn btn-gold" onclick="showPage('portfolio')">View Portfolio</button>
@@ -483,9 +547,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:80px 0 4
         </div>
       </div>
     </div>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      Scroll
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-track"></div>
     </div>
   </section>
 
@@ -1203,6 +1267,7 @@ function renderHome(){
 function renderFeaturedGrid(){
   const grid = document.getElementById('featured-grid');
   const items = state.portfolioItems.slice(0,5);
+  grid.className = `featured-grid count-${Math.max(1, Math.min(items.length, 5))}`;
   grid.innerHTML = items.map((item)=>`
     <div class="pitem" onclick="openLightbox('${item.img}')">
       <img src="${item.img}" alt="${item.title}" loading="lazy">
@@ -1827,87 +1892,123 @@ function initHero3D(){
     heroRenderer.dispose?.();
     heroRenderer = null;
   }
+
   const hero = canvas.parentElement;
+  const isMobile = window.innerWidth < 768;
   const W = hero.offsetWidth || window.innerWidth;
-  const H = hero.offsetHeight || 680;
+  const H = hero.offsetHeight || (isMobile ? Math.max(window.innerHeight, 720) : 760);
+
   heroScene = new THREE.Scene();
-  heroCamera = new THREE.PerspectiveCamera(55, W/H, .1, 1000);
-  heroCamera.position.set(0,0,8);
+  heroScene.fog = new THREE.FogExp2('#041f32', isMobile ? 0.07 : 0.05);
+
+  heroCamera = new THREE.PerspectiveCamera(isMobile ? 62 : 55, W / H, .1, 1000);
+  heroCamera.position.set(0, isMobile ? 0.12 : 0, isMobile ? 10 : 8);
+
   heroRenderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-  heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
-  heroRenderer.setSize(W,H,false);
+  heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2));
+  heroRenderer.setSize(W, H, false);
+  if('outputColorSpace' in heroRenderer && THREE.SRGBColorSpace){
+    heroRenderer.outputColorSpace = THREE.SRGBColorSpace;
+  }
 
   const group = new THREE.Group();
   heroScene.add(group);
   const orange = new THREE.Color('#EB6624');
-  const navy = new THREE.Color('#0B3A5B');
+  const navy = new THREE.Color('#052C47');
+  const ivory = new THREE.Color('#F5F5F5');
   const geos = [
-    new THREE.TorusKnotGeometry(1.2,.22,140,18),
-    new THREE.OctahedronGeometry(.85,0),
-    new THREE.IcosahedronGeometry(.65,0),
-    new THREE.TorusGeometry(.9,.16,20,80),
+    new THREE.TorusKnotGeometry(isMobile ? .95 : 1.18, .20, 160, 20),
+    new THREE.OctahedronGeometry(isMobile ? .7 : .82, 0),
+    new THREE.IcosahedronGeometry(isMobile ? .55 : .66, 0),
+    new THREE.TorusGeometry(isMobile ? .78 : .92, .14, 24, 96),
   ];
+
   geos.forEach((geo, i)=>{
     const mat = new THREE.MeshStandardMaterial({
       color: i % 2 === 0 ? orange : navy,
-      emissive: i % 2 === 0 ? orange.clone().multiplyScalar(.22) : orange.clone().multiplyScalar(.1),
-      metalness:.35,
-      roughness:.35,
-      transparent:true,
-      opacity:.9,
-      wireframe: i===1
+      emissive: i % 2 === 0 ? orange.clone().multiplyScalar(.26) : orange.clone().multiplyScalar(.12),
+      emissiveIntensity: 1,
+      metalness: .45,
+      roughness: .28,
+      transparent: true,
+      opacity: .94,
+      wireframe: i === 1
     });
-    const m = new THREE.Mesh(geo, mat);
-    m.position.set((i-1.5)*1.8, (i%2===0?1:-1)*.7, -i*.5);
-    m.userData = {rx:(Math.random()-.5)*.01, ry:(Math.random()-.5)*.014};
-    group.add(m);
+    const mesh = new THREE.Mesh(geo, mat);
+    if(isMobile){
+      mesh.position.set((i - 1.5) * 1.18, (i % 2 === 0 ? .8 : -.8) * .8, -i * .4);
+    }else{
+      mesh.position.set((i - 1.5) * 1.8, (i % 2 === 0 ? 1 : -1) * .72, -i * .5);
+    }
+    mesh.userData = {
+      baseY: mesh.position.y,
+      rx: (Math.random() - .5) * .008,
+      ry: (Math.random() - .5) * .012
+    };
+    group.add(mesh);
   });
 
-  const ambient = new THREE.AmbientLight('#ffffff', .8); heroScene.add(ambient);
-  const key = new THREE.PointLight('#EB6624', 2.4, 40); key.position.set(3,3,6); heroScene.add(key);
-  const fill = new THREE.PointLight('#ffffff', .9, 40); fill.position.set(-4,-2,5); heroScene.add(fill);
+  heroScene.add(new THREE.AmbientLight(ivory, .92));
+  const key = new THREE.PointLight('#EB6624', isMobile ? 2.2 : 2.8, 44);
+  key.position.set(3.2, 3.5, 6);
+  heroScene.add(key);
+  const fill = new THREE.PointLight('#F5F5F5', .9, 36);
+  fill.position.set(-4, -2, 5);
+  heroScene.add(fill);
+  const rim = new THREE.PointLight('#052C47', 1.2, 34);
+  rim.position.set(0, -3, 4);
+  heroScene.add(rim);
 
   const particles = new THREE.BufferGeometry();
-  const count = 220;
-  const pos = new Float32Array(count*3);
-  for(let i=0;i<count;i++){
-    pos[i*3]=(Math.random()-.5)*18;
-    pos[i*3+1]=(Math.random()-.5)*10;
-    pos[i*3+2]=(Math.random()-.5)*12;
+  const count = isMobile ? 120 : 220;
+  const pos = new Float32Array(count * 3);
+  for(let i = 0; i < count; i++){
+    pos[i * 3] = (Math.random() - .5) * 18;
+    pos[i * 3 + 1] = (Math.random() - .5) * 10;
+    pos[i * 3 + 2] = (Math.random() - .5) * 12;
   }
-  particles.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  const pMat = new THREE.PointsMaterial({color:'#EB6624', size:.03, transparent:true, opacity:.45});
-  heroScene.add(new THREE.Points(particles,pMat));
+  particles.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const pMat = new THREE.PointsMaterial({color:'#EB6624', size:isMobile ? .026 : .03, transparent:true, opacity:.4});
+  const cloud = new THREE.Points(particles, pMat);
+  heroScene.add(cloud);
 
-  let mouseX=0, mouseY=0;
+  let mouseX = 0, mouseY = 0;
   const move = (e)=>{
     mouseX = (e.clientX / window.innerWidth - .5) * 2;
     mouseY = -(e.clientY / window.innerHeight - .5) * 2;
   };
-  window.addEventListener('mousemove', move, {passive:true});
+  if(!isMobile){
+    window.addEventListener('mousemove', move, {passive:true});
+  }
 
   let t = 0;
   const animate = ()=>{
-    heroAnimId = requestAnimationFrame(animate); t += .008;
-    group.children.forEach((m, idx)=>{
-      m.rotation.x += m.userData.rx;
-      m.rotation.y += m.userData.ry;
-      m.position.y += Math.sin(t + idx) * .0025;
+    heroAnimId = requestAnimationFrame(animate);
+    t += .008;
+    group.children.forEach((mesh, idx)=>{
+      mesh.rotation.x += mesh.userData.rx;
+      mesh.rotation.y += mesh.userData.ry;
+      mesh.position.y = mesh.userData.baseY + Math.sin(t * 1.1 + idx) * (isMobile ? .05 : .08);
     });
-    group.rotation.y += 0.0015;
-    heroCamera.position.x += (mouseX*.45 - heroCamera.position.x) * .03;
-    heroCamera.position.y += (mouseY*.25 - heroCamera.position.y) * .03;
-    heroCamera.lookAt(heroScene.position);
+    group.rotation.y += isMobile ? 0.0011 : 0.0015;
+    cloud.rotation.y -= 0.0007;
+    heroCamera.position.x += ((isMobile ? 0 : mouseX * .42) - heroCamera.position.x) * .03;
+    heroCamera.position.y += ((isMobile ? .12 : mouseY * .22) - heroCamera.position.y) * .03;
+    heroCamera.lookAt(0,0,0);
     heroRenderer.render(heroScene, heroCamera);
   };
   animate();
 
   const onResize = ()=>{
+    const mobile = window.innerWidth < 768;
     const w = hero.offsetWidth || window.innerWidth;
-    const h = hero.offsetHeight || 680;
-    heroCamera.aspect = w/h;
+    const h = hero.offsetHeight || (mobile ? Math.max(window.innerHeight, 720) : 760);
+    heroCamera.aspect = w / h;
+    heroCamera.fov = mobile ? 62 : 55;
+    heroCamera.position.z = mobile ? 10 : 8;
     heroCamera.updateProjectionMatrix();
-    heroRenderer.setSize(w,h,false);
+    heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2));
+    heroRenderer.setSize(w, h, false);
   };
   window.addEventListener('resize', onResize);
 }
